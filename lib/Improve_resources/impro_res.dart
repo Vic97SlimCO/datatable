@@ -91,7 +91,7 @@ toast_impro(String text,bool goodrq){
           children: <Widget>[
             Icon(goodrq?Icons.check_circle:Icons.cancel_outlined,color: goodrq?Colors.green:Colors.red),
             Padding(padding: EdgeInsets.symmetric(horizontal: 8),
-              child: Text(text),),
+              child: Text(text,style: TextStyle(color: Colors.black),),),
           ],
         ),
       ),

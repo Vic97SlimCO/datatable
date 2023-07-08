@@ -66,7 +66,8 @@ class _Dash_mainState extends State<Dash_main> with TickerProviderStateMixin{
     'Brenda',
     'MARKETING5',
     'Ariadna',
-    'SELENE'
+    'SELENE',
+    'Victor Moneda'
   ];
   List<String> items2 = [
     '*',

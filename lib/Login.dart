@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import 'option_menu.dart';
 
@@ -17,13 +18,26 @@ class LoginTable extends StatelessWidget {
 
   @override
   Widget build(BuildContext context){
+    Map<int, Color> colorCodes = {
+      50: Color.fromRGBO(25, 26, 54, .1),
+      100: Color.fromRGBO(25, 26, 54, .2),
+      200: Color.fromRGBO(25, 26, 54, .3),
+      300: Color.fromRGBO(25, 26, 54, .4),
+      400: Color.fromRGBO(25, 26, 54, .5),
+      500: Color.fromRGBO(25, 26, 54, .6),
+      600: Color.fromRGBO(25, 26, 54, .7),
+      700: Color.fromRGBO(25, 26, 54, .8),
+      800: Color.fromRGBO(25, 26, 54, .9),
+      900: Color.fromRGBO(25, 26, 54, 1),
+    };// Green color code: FF93cd48MaterialColor customColor = MaterialColor(0xFF93cd48, colorCodes);
     return GetMaterialApp(
       builder: BotToastInit(),
       navigatorObservers: [BotToastNavigatorObserver()],
       debugShowCheckedModeBanner: false,
       title: _title,
       theme: ThemeData(
-          primarySwatch: Colors.deepPurple
+          textTheme: GoogleFonts.quicksandTextTheme(Theme.of(context).textTheme).apply(bodyColor: Colors.black),
+          primarySwatch:MaterialColor(0xFF4A148C, colorCodes),
       ),
       home: _LoginT(),
     );
@@ -50,27 +64,37 @@ shared_preferences() async {
   Widget build(BuildContext context){
   shared_preferences();
     return Scaffold(
-        appBar: AppBar(title: Text('Slim Company')),
+        //appBar: AppBar(title: Text('Slim Company')),
         body: Container(
             decoration: BoxDecoration(
-              image: DecorationImage(image: NetworkImage('https://marketplace.canva.com/EAE_LfKw720/1/0/1600w/canva-fondo-de-pantalla-degradado-rosa-y-azul-dibujo-constelaci%C3%B3n-ALs0nk1iKfU.jpg'),
+              //image: DecorationImage(image: NetworkImage('https://marketplace.canva.com/EAE_LfKw720/1/0/1600w/canva-fondo-de-pantalla-degradado-rosa-y-azul-dibujo-constelaci%C3%B3n-ALs0nk1iKfU.jpg'),
+              image: DecorationImage(image: AssetImage('assets/cover.png'),
                   fit: BoxFit.cover),
             ),
               child: Center(
                 child: Container(
                   width: 500,
                   height: 500,
-                  child: Padding(padding: const EdgeInsets.all(10),
+                  //color: Colors.white,
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.all(Radius.circular(20))
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(10),
                             child: Column(
                               mainAxisAlignment:  MainAxisAlignment.center,
                               children: <Widget>[
-                                Container( // El contenedor de la imagen de la pantalla
+                                /*Container( // El contenedor de la imagen de la pantalla
                                     alignment: Alignment.center,
                                     padding: const EdgeInsets.all(10),
                                     child: Image(
                                       image: NetworkImage('https://http2.mlstatic.com/storage/mshops-appearance-api/images/65/97892065/logo-2019043020294833300.png'),
                                       height: 140,
-                                    )),
+                                    )),*/
+                                Text('¡Qué gusto verte de nuevo!',style: TextStyle(color: Colors.black,fontSize: 30),),
+                                Text('Inicia sesión para comenzar',style: TextStyle(color: Colors.black,fontSize: 20)),
+                                SizedBox(height: 40,),
                                 Container(//El contenedor del cuadro de texto de Usuario
                                   padding: const EdgeInsets.all(10),
                                   child: TextField(
@@ -79,7 +103,7 @@ shared_preferences() async {
                                       border: OutlineInputBorder(),
                                       labelText: 'Usuario',
                                     ),
-                                    style: TextStyle(color: Colors.white),
+                                    style: TextStyle(color: Colors.black),
                                   ),
                                  // color: Colors.white,
                                 ),
@@ -92,18 +116,23 @@ shared_preferences() async {
                                       border: OutlineInputBorder(),
                                       labelText: 'Contraseña',
                                     ),
-                                    style: TextStyle(color: Colors.white),
+                                    style: TextStyle(color: Colors.black),
                                   ),
                                   //color: Colors.white,
                                 ),
                                 Container(//El boton con el cual inicia una peticion con los parametros agregados
                                     height: 50,
-                                    padding: const EdgeInsets.fromLTRB(25, 20, 25, 0),
-                                    child: ElevatedButton(
-                                      child: const Text('Entrar',
+                                    decoration: BoxDecoration(
+                                        color: Color.fromRGBO(32, 41, 79, 1),
+                                        borderRadius: BorderRadius.all(Radius.circular(20))
+                                    ),
+                                    //padding: const EdgeInsets.fromLTRB(25, 20, 25, 0),
+                                    child: TextButton(
+                                      child: const Text('Comenzar',
                                         style: TextStyle(
                                             height: 1,
                                             fontSize: 30,
+                                            color: Colors.white
                                         ),),
                                       onPressed: () async {
                                         var url = Uri.parse('http://45.56.74.34:5558/usuarios/login/?name='+nameController.text+'&password='+passwordController.text);

@@ -29,7 +29,9 @@ class menu_opciones extends StatelessWidget{
       scrollBehavior: MyCustomScrollBehavior(),
       debugShowCheckedModeBanner: false,
       title: 'Lista Orden',
-      theme:  ThemeData(colorScheme: ColorScheme.fromSwatch().copyWith(primary: Color(0xFF000000))),
+      theme:  ThemeData(
+          colorScheme: ColorScheme.fromSwatch().copyWith(primary: Color(0xFF000000))
+      ),
       home: Menu(user: user,),
     );
   }
@@ -181,7 +183,6 @@ class _Menu extends State<Menu>{
        ),
      );
      Widget _btn_dev = Padding(
-
        padding:EdgeInsets.all(8.0),
        child: GestureDetector(
          onTap: (){
@@ -278,7 +279,7 @@ class _Menu extends State<Menu>{
        padding:EdgeInsets.all(8.0),
        child: GestureDetector(
          onTap: (){
-           Navigator.push(context,trans.Transition(child:Folios_Vista(user: widget.user),transitionEffect: trans.TransitionEffect.BOTTOM_TO_TOP));
+           Navigator.push(context,trans.Transition(child:Folios_Vista(user: widget.user),transitionEffect: trans.TransitionEffect.RIGHT_TO_LEFT));
          },
          child:Container(
              padding: EdgeInsets.all(20),
@@ -320,13 +321,12 @@ class _Menu extends State<Menu>{
              )
          ),
        ),);
-
      Widget _btn_promo = Padding(
 
        padding:EdgeInsets.all(8.0),
        child: GestureDetector(
          onTap: (){
-           Navigator.push(context,trans.Transition(child:stfulpromo(user: widget.user),transitionEffect: trans.TransitionEffect.BOTTOM_TO_TOP));
+           Navigator.push(context,trans.Transition(child:stfulpromo(user: widget.user),transitionEffect: trans.TransitionEffect.TOP_TO_BOTTOM));
          },
          child:Container(
              padding: EdgeInsets.all(20),
@@ -438,7 +438,7 @@ class _Menu extends State<Menu>{
                  fit: StackFit.loose,
                  children: <Widget>[
                    Align(alignment: Alignment.center,
-                     child: Image.network('https://www.tibco.com/sites/tibco/files/media_entity/2022-01/column-chart-example.svg'),),
+                     child: Image.network('https://www.eviciti.com.mx/2019/wp-content/uploads/2021/03/imagen-blog-web39.jpg'),),
                    Align(
                      alignment:Alignment.bottomCenter,
                      child: NeumorphicText('PUNTOS A\nMEJORAR',
@@ -555,6 +555,53 @@ class _Menu extends State<Menu>{
              )
          ),
        ),);
+     Widget _btn_design_tareas_returns = Padding(
+       padding:EdgeInsets.all(8.0),
+       child: GestureDetector(
+         onTap: (){
+           //Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>User_mktdsgn(user: widget.user)), (Route<dynamic> route) => false);
+           //Navigator.push(context,trans.Transition(child:improve_points(user: widget.user,),transitionEffect: trans.TransitionEffect.SCALE));
+         },
+         child:Container(
+             padding: EdgeInsets.all(20),
+             width: 400,
+             height: 400,
+             child:Neumorphic(
+               style: NeumorphicStyle(
+                 shadowLightColor: Colors.white,
+                 shadowDarkColor: Colors.white,
+                 shape: NeumorphicShape.concave,
+                 boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(12)),
+                 depth: 4,
+                 lightSource: LightSource.topLeft,
+               ),
+               child:Stack(
+                 fit: StackFit.loose,
+                 children: <Widget>[
+                   Align(alignment: Alignment.center,
+                     child: Image.network('https://copackerplus.com/wp-content/uploads/2022/10/devolucion-300x300.png'),),
+                   Align(
+                     alignment:Alignment.bottomCenter,
+                     child: NeumorphicText('TAREAS\nDEVOLUCIONES',
+                       curve: Neumorphic.DEFAULT_CURVE,
+                       style: NeumorphicStyle(
+                         intensity: 16,
+                         lightSource: LightSource.top,
+                         shadowLightColor: Colors.white,
+                         shadowDarkColor: Colors.white,
+                         depth: 4,
+                         color: Colors.black,
+                       ),
+                       textStyle: NeumorphicTextStyle(
+                         fontSize: 30,
+                         fontWeight: FontWeight.bold,
+                       ),),
+                   ),
+                 ],
+               ),
+             )
+         ),
+       ),);
      List<Widget> _botones =[
        Visibility(child: _btn_cross,visible: allow_container(),),
        Visibility(child: _btn_cont,visible: allow_container(),),
@@ -562,7 +609,8 @@ class _Menu extends State<Menu>{
        Visibility(child: _btn_indice,visible: allow_indices(),),
        Visibility(child: _btn_improve,visible: allow_improve(),),
        Visibility(child: _btn_design_tareas,visible: allow_d_task(),),
-       Visibility(child: _btn_design_tareas_users,visible: allow_u_task(),)
+       Visibility(child: _btn_design_tareas_users,visible: allow_u_task(),),
+       Visibility(child: _btn_design_tareas_returns,visible: is_allowedreturns(),)
      ];
      return Scaffold(
        appBar: AppBar(
@@ -985,6 +1033,13 @@ class _Menu extends State<Menu>{
   is_allowedTKN(){
     bool value = false;
     if(widget.user=='101'||widget.user=='103'||widget.user=='33'||widget.user=='101'||widget.user=='121'||widget.user=='1057'){
+      value = true;
+    }
+    return value;
+  }
+  is_allowedreturns(){
+    bool value = false;
+    if(widget.user=='121'){
       value = true;
     }
     return value;

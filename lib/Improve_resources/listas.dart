@@ -544,7 +544,8 @@ List<PlutoColumn> colums = <PlutoColumn>[
         'Brenda',
         'MARKETING5',
         'Ariadna',
-        'SELENE'
+        'SELENE',
+        'Victor Moneda'
       ]
   ),enableContextMenu: true,width: 95),
   PlutoColumn(title: 'DISEÑO', field: 'USER_DGN', type: PlutoColumnType.select(

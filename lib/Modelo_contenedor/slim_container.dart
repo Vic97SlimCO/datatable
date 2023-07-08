@@ -1274,6 +1274,8 @@ class atm_cont {
   int? sHEIN;
   int? fUL;
   String? iMAGE;
+  int? vtas30;
+  int? cam_CH;
 
   atm_cont(
       {this.cODIGO,
@@ -1285,7 +1287,9 @@ class atm_cont {
         this.mL,
         this.sHEIN,
         this.fUL,
-        this.iMAGE});
+        this.iMAGE,
+        this.vtas30,
+        this.cam_CH});
 
   atm_cont.fromJson(Map<String, dynamic> json) {
     cODIGO = json['CODIGO'];
@@ -1298,6 +1302,8 @@ class atm_cont {
     sHEIN = json['SHEIN'];
     fUL = json['FUL'];
     iMAGE = json['IMAGE'];
+    vtas30=json['AMZ']+json['ML']+json['SHEIN'];
+    cam_CH = json['CAMINO_CH'];
   }
 
   Map<String, dynamic> toJson() {
@@ -1312,11 +1318,13 @@ class atm_cont {
     data['SHEIN'] = this.sHEIN;
     data['FUL'] = this.fUL;
     data['IMAGE'] = this.iMAGE;
+    data['vtas30'] = this.vtas30;
+    data['CAMINO_CH'] =  this.cam_CH;
     return data;
   }
 }
 
-/*class get_ATM{
+class get_ATM{
   Future<List<atm_cont>> ATM_CONTAINER() async {
     var url = Uri.parse('http://45.56.74.34:6660/container_atm');
     print(url);
@@ -1335,7 +1343,8 @@ class atm_cont {
       String sJson =response.body.toString();
       var Json = json.decode(sJson);
       toast_dsgn(Json["message"], false);
+      throw Exception('No se pudo');
     }
   }
-}*/
+}
 
