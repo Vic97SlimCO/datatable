@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 
 import 'option_menu.dart';
 
-class Cross_AMZN extends StatefulWidget {
+/*class Cross_AMZN extends StatefulWidget {
   String user;
    Cross_AMZN({Key? key, required this.user}) : super(key: key);
 
@@ -26,7 +26,7 @@ class _Cross_AMZNState extends State<Cross_AMZN> {
     );
   }
 }
-
+*/
 class ListCross extends StatefulWidget {
   String user;
   ListCross({Key? key,required this.user}) : super(key: key);

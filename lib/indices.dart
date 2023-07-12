@@ -8,7 +8,7 @@ import 'package:pluto_grid/pluto_grid.dart';
 
 import 'option_menu.dart';
 
-class Screen_indices extends StatefulWidget {
+/*class Screen_indices extends StatefulWidget {
   String user;
    Screen_indices({Key? key,required this.user}) : super(key: key);
 
@@ -29,7 +29,7 @@ class _Screen_indicesState extends State<Screen_indices> {
       home: Mainindice(user: widget.user),
     );
   }
-}
+}*/
 
 class Mainindice extends StatefulWidget {
   String user;

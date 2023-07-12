@@ -20,7 +20,7 @@ import 'improve.dart';
 import 'lista_multiple.dart';
 import 'main.dart';
 
-class menu_opciones extends StatelessWidget{
+/*class menu_opciones extends StatelessWidget{
   String user;
   menu_opciones({Key? key, required this.user}) :super(key: key);
   @override
@@ -35,7 +35,7 @@ class menu_opciones extends StatelessWidget{
       home: Menu(user: user,),
     );
   }
-}
+}*/
 
 class Menu extends StatefulWidget{
   String user;
@@ -182,57 +182,12 @@ class _Menu extends State<Menu>{
          ),
        ),
      );
-     Widget _btn_dev = Padding(
-       padding:EdgeInsets.all(8.0),
-       child: GestureDetector(
-         onTap: (){
-           Navigator.push(context,trans.Transition(child:Dev(user: widget.user),transitionEffect: trans.TransitionEffect.TOP_TO_BOTTOM));
-         },
-         child:Container(
-           padding: EdgeInsets.all(20),
-           width: 400,
-            height: 400,
-            child:Neumorphic(
-              style: NeumorphicStyle(
-                  shadowLightColor: Colors.white,
-                  shadowDarkColor: Colors.white,
-                shape: NeumorphicShape.concave,
-                boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(12)),
-                depth: 4,
-                lightSource: LightSource.topLeft,
-              ),
-              child:Stack(
-                fit: StackFit.loose,
-                children: <Widget>[
-                  Align(alignment: Alignment.center,
-                    child: Image.network('https://www.pabisretail.com/wp-content/uploads/2022/06/Devoluciones-2.jpg'),),
-                  Align(
-                    alignment:Alignment.bottomCenter,
-                    child: NeumorphicText('DEVOLUCIONES',
-                      curve: Neumorphic.DEFAULT_CURVE,
-                      style: NeumorphicStyle(
-                        intensity: 16,
-                        lightSource: LightSource.top,
-                        shadowLightColor: Colors.white24,
-                        shadowDarkColor: Colors.black,
-                        depth: 4,
-                        color: Colors.black,
-                      ),
-                      textStyle: NeumorphicTextStyle(
-                        fontSize: 30,
-                        fontWeight: FontWeight.bold,
-                      ),),
-                  ),
-                ],
-              ),
-            )
-         ),
-       ),);
+
      Widget _btn_cross = Padding(
        padding:EdgeInsets.all(8.0),
        child: GestureDetector(
          onTap: (){
-           Navigator.push(context,trans.Transition(child:Cross_AMZN(user: widget.user),transitionEffect: trans.TransitionEffect.BOTTOM_TO_TOP));
+           Navigator.push(context,trans.Transition(child:ListCross(user: widget.user),transitionEffect: trans.TransitionEffect.BOTTOM_TO_TOP));
          },
          child:Container(
              padding: EdgeInsets.all(20),
@@ -279,7 +234,7 @@ class _Menu extends State<Menu>{
        padding:EdgeInsets.all(8.0),
        child: GestureDetector(
          onTap: (){
-           Navigator.push(context,trans.Transition(child:Folios_Vista(user: widget.user),transitionEffect: trans.TransitionEffect.RIGHT_TO_LEFT));
+           Navigator.push(context,trans.Transition(child:List_Folios(user: widget.user),transitionEffect: trans.TransitionEffect.RIGHT_TO_LEFT));
          },
          child:Container(
              padding: EdgeInsets.all(20),
@@ -326,7 +281,7 @@ class _Menu extends State<Menu>{
        padding:EdgeInsets.all(8.0),
        child: GestureDetector(
          onTap: (){
-           Navigator.push(context,trans.Transition(child:stfulpromo(user: widget.user),transitionEffect: trans.TransitionEffect.TOP_TO_BOTTOM));
+           Navigator.push(context,trans.Transition(child:Promotion_screen(user: widget.user),transitionEffect: trans.TransitionEffect.TOP_TO_BOTTOM));
          },
          child:Container(
              padding: EdgeInsets.all(20),
@@ -372,7 +327,7 @@ class _Menu extends State<Menu>{
        padding:EdgeInsets.all(8.0),
        child: GestureDetector(
          onTap: (){
-           Navigator.push(context,trans.Transition(child:Screen_indices(user: widget.user,),transitionEffect: trans.TransitionEffect.SCALE));
+           Navigator.push(context,trans.Transition(child:Mainindice(user: widget.user,),transitionEffect: trans.TransitionEffect.SCALE));
          },
          child:Container(
              padding: EdgeInsets.all(20),
@@ -465,7 +420,7 @@ class _Menu extends State<Menu>{
        padding:EdgeInsets.all(8.0),
        child: GestureDetector(
          onTap: (){
-           Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>Dsgn_Mkt(user: widget.user)), (Route<dynamic> route) => false);
+           Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>Dash_main(user: widget.user)), (Route<dynamic> route) => false);
            //Navigator.push(context,trans.Transition(child:improve_points(user: widget.user,),transitionEffect: trans.TransitionEffect.SCALE));
          },
          child:Container(
@@ -512,7 +467,7 @@ class _Menu extends State<Menu>{
        padding:EdgeInsets.all(8.0),
        child: GestureDetector(
          onTap: (){
-           Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>User_mktdsgn(user: widget.user)), (Route<dynamic> route) => false);
+           Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>users_dsgn_tasks(user: widget.user)), (Route<dynamic> route) => false);
            //Navigator.push(context,trans.Transition(child:improve_points(user: widget.user,),transitionEffect: trans.TransitionEffect.SCALE));
          },
          child:Container(
@@ -561,6 +516,7 @@ class _Menu extends State<Menu>{
          onTap: (){
            //Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>User_mktdsgn(user: widget.user)), (Route<dynamic> route) => false);
            //Navigator.push(context,trans.Transition(child:improve_points(user: widget.user,),transitionEffect: trans.TransitionEffect.SCALE));
+           Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>Devoluciones_main(user: widget.user)), (Route<dynamic> route) => false);
          },
          child:Container(
              padding: EdgeInsets.all(20),
@@ -1039,7 +995,10 @@ class _Menu extends State<Menu>{
   }
   is_allowedreturns(){
     bool value = false;
-    if(widget.user=='121'){
+    if(widget.user=='121'
+    ||widget.user=='113'
+    ||widget.user=='123'
+    ||widget.user=='116'){
       value = true;
     }
     return value;

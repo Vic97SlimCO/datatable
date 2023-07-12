@@ -1,7 +1,5 @@
 import 'dart:convert';
 import 'dart:typed_data';
-import 'package:datatable/Modelo_contenedor/model.dart';
-import 'package:datatable/design_mkt/design_res.dart';
 import 'package:datatable/sub_folios.dart';
 import 'package:datatable/xls/container_layout.dart';
 import 'package:excel/excel.dart';
@@ -18,6 +16,7 @@ import 'dart:io';
 import '../Modelo_traspaso/modelo_traspaso.dart';
 import '../folios_screen.dart';
 import '../main.dart';
+import 'Slim_model.dart';
 
 class container_data{
   String cODIGO;
@@ -401,7 +400,7 @@ class _Alert_AddFolioState extends State<Alert_AddFolio> {
             print(Folio+'-'+referencia+'-'+days+'-'+lead_days+'-'+apartado+'-'+proveedor+'-'+Status+'-'+now);
             await Create_Folios().ADDFolios(Folio.trim(),referencia.trim(),now,proveedor,tipo,int.parse(days),int.parse(lead_days),apartado, Status);
             Accion_realizada('Folio creado');
-            Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>Folios_Vista(user: widget.user)), (Route<dynamic> route) => false);
+            Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>List_Folios(user: widget.user)), (Route<dynamic> route) => false);
           }on Exception catch(e){
             Accion_realizada('Error al crear folio');
             print(e);
@@ -575,7 +574,7 @@ class _AccMXAlrtState extends State<AccMXAlrt> {
           try{
             print(Folio+'-'+referencia+'-'+days+'-'+lead_days+'-'+apartado+'-'+proveedor+'-'+Status+'-'+now);
             await Create_Folios().ADDFolios(Folio.trim(),referencia.trim(),now,proveedor,tipo,int.parse(days),int.parse(lead_days),apartado, Status);
-            Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>Sub_Folios(user: widget.user, item_folio: widget.folio)), (route) => false);
+            Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>AccMX_Screen(user: widget.user, item_folio: widget.folio)), (route) => false);
           }on Exception catch(e){
             print(e);
           }
@@ -931,6 +930,19 @@ ProveedorbyName(String id,List<ProveedoresACCMX> provider_list){
         provider_convert = provider_list[x].Nombre;
       }
     }
+    //if(provider_convert==''){provider_convert=='N/A';}
+  //print(provider_convert);
+  return provider_convert;
+}
+
+ProveedoresbyID(String name,List<ProveedoresACCMX> provider_list){
+  String provider_convert='';
+  for(int x=0;x<provider_list.length;x++){
+    //print(provider_list[x].Nombre.toString()+'-'+name);
+    if(provider_list[x].Nombre.toString()==name){
+      provider_convert = provider_list[x].ID.toString();
+    }
+  }
   //print(provider_convert);
   return provider_convert;
 }
@@ -1263,7 +1275,7 @@ class _Dialog_fullState extends State<Dialog_full> {
   }
 }
 
-class atm_cont {
+/*class atm_cont {
   String? cODIGO;
   String? dESCRIPCION;
   int? sTOCKCEDIS;
@@ -1347,4 +1359,4 @@ class get_ATM{
     }
   }
 }
-
+*/

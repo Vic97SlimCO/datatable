@@ -14,6 +14,7 @@ import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'Modelo_contenedor/Slim_model.dart';
 import 'Modelo_traspaso/modelo_traspaso.dart';
 import 'package:group_radio_button/group_radio_button.dart';
 import 'package:syncfusion_flutter_xlsio/xlsio.dart' as xls;

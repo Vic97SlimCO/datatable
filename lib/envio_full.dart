@@ -14,6 +14,7 @@ import 'package:multi_sort/multi_sort.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import 'Modelo_contenedor/Slim_model.dart';
 import 'Modelo_traspaso/modelo_traspaso.dart';
 import 'main.dart';
 import 'option_menu.dart';

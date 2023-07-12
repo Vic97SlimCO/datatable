@@ -54,7 +54,7 @@ class _MultiList extends State<MultiList>{
   String dropdownvalue = '*';
   String dropdownsub2 = '*';
   String provider = '0';
-  List<model_traspaso.Proveedores> provs = <model_traspaso.Proveedores>[];
+  List<Proveedores> provs = <Proveedores>[];
   var item_s2 = [
     '*',
     'BATERIAS GENERICAS',
@@ -478,10 +478,10 @@ class _MultiList extends State<MultiList>{
       throw Exception('NO se pudo');
   }
 
-  Future<List<model_traspaso.Proveedores>> Prove() async{
+  Future<List<Proveedores>> Prove() async{
     var url = Uri.parse('http://45.56.74.34:5558/proveedores/list');
     var response = await http.get(url);
-    List<model_traspaso.Proveedores> proveedores = <model_traspaso.Proveedores>[];
+    List<Proveedores> proveedores = <Proveedores>[];
     if(response.statusCode ==200){
       String sJson =response.body.toString();
       int count = sJson.toString().length;
@@ -489,7 +489,7 @@ class _MultiList extends State<MultiList>{
       var Jsonv = json.decode(_sub);
       //print(Jsonv);
       for (var noteJson in Jsonv) {
-        proveedores.add(model_traspaso.Proveedores.from(noteJson));
+        proveedores.add(Proveedores.from(noteJson));
       }
       return proveedores;
     }else

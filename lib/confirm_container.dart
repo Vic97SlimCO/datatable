@@ -9,7 +9,7 @@ import 'package:get/get.dart';
 import 'package:pluto_grid/pluto_grid.dart';
 import 'Modelo_contenedor/slim_container.dart';
 
-class Confirmar_Con extends StatefulWidget {
+/*class Confirmar_Con extends StatefulWidget {
   String user;
   Folio_Container folio;
   Confirmar_Con({Key? key,required this.user,required this.folio}) : super(key: key);
@@ -27,7 +27,7 @@ class _Confirmar_ConState extends State<Confirmar_Con> {
       home: ScreenConfirmCont(user: widget.user,folio: widget.folio,),
     );
   }
-}
+}*/
 
 class ScreenConfirmCont extends StatefulWidget {
   String type = '*';
@@ -288,13 +288,14 @@ class _ScreenConfirmContState extends State<ScreenConfirmCont> {
       stateManager.setAutoEditing(flag);
     });
   }
+  //final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
     TextEditingController controller = TextEditingController();
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(onPressed: (){
-          Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>Container_MX(user: widget.user, folio: widget.folio)), (Route<dynamic> route) => false);
+          Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>GRID_Container(user: widget.user, folio: widget.folio)), (Route<dynamic> route) => false);
         }, icon: Icon(Icons.arrow_back_ios)),
         title: Row(
           children: <Widget>[

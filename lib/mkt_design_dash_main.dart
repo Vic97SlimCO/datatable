@@ -18,7 +18,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'Improve_resources/listas.dart';
 
 
-class Dsgn_Mkt extends StatefulWidget {
+/*class Dsgn_Mkt extends StatefulWidget {
   String user;
    Dsgn_Mkt({Key? key,required this.user}) : super(key: key);
 
@@ -36,7 +36,7 @@ class _Dsgn_MktState extends State<Dsgn_Mkt> {
       home: Dash_main(user:widget.user),
     );
   }
-}
+}*/
 
 class Dash_main extends StatefulWidget {
   String user;
@@ -778,7 +778,7 @@ class _Dash_mainState extends State<Dash_main> with TickerProviderStateMixin{
       ),
       appBar: AppBar(
         leading: IconButton(onPressed: (){
-          Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>menu_opciones(user: widget.user)), (Route<dynamic> route) => false);
+          Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>Menu(user: widget.user)), (Route<dynamic> route) => false);
           setState(() {
             timers.cancel();
           });
@@ -1282,7 +1282,7 @@ class _Dta_tableState extends State<Dta_table> {
   }
 }
 
-class User_mktdsgn extends StatefulWidget {
+/*class User_mktdsgn extends StatefulWidget {
   String user;
   User_mktdsgn({required this.user,Key? key}) : super(key: key);
 
@@ -1299,7 +1299,7 @@ class _User_mktdsgnState extends State<User_mktdsgn> {
         home: users_dsgn_tasks(user:widget.user),
     );
   }
-}
+}*/
 
 class users_dsgn_tasks extends StatefulWidget {
   String user;
@@ -1542,7 +1542,7 @@ class _users_dsgnState extends State<users_dsgn_tasks> with TickerProviderStateM
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(onPressed: (){
-          Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>menu_opciones(user: widget.user)), (Route<dynamic> route) => false);
+          Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>Menu(user: widget.user)), (Route<dynamic> route) => false);
           setState(() {
             timers.cancel();
           });

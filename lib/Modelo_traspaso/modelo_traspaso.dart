@@ -126,18 +126,6 @@ class areas_stock {
 
 }
 
-class Proveedores{
-  final String Nombre;
-  final int ID;
-
-  Proveedores({required this.Nombre,required this.ID});
-
-  factory Proveedores.from(Map<String, dynamic>json){
-    return Proveedores(
-        Nombre: json['NOMBRE'],
-        ID: json['ID']);
-  }
-}
 
 class historial{
   String fecha,compra_ID,Proveedor,SKU;

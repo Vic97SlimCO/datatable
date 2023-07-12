@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:bot_toast/bot_toast.dart';
+import 'package:checkbox_grouped/checkbox_grouped.dart';
 import 'package:datatable/Modelo_contenedor/model.dart';
 import 'package:datatable/acc_mx.dart';
 import 'package:datatable/container.dart';
@@ -45,7 +46,7 @@ class Folios_Screen extends StatefulWidget {
   State<Folios_Screen> createState() => _Folios_ScreenState();
 }
 
-class _Folios_ScreenState extends State<Folios_Screen> {
+class _Folios_ScreenState extends State<Folios_Screen> with TickerProviderStateMixin{
   List<Proveedores> provs = <Proveedores>[];
   List<Proveedores> provs_segmentada = <Proveedores>[];
   List<Proveedores> provs_folio = <Proveedores>[];
@@ -129,6 +130,7 @@ class _Folios_ScreenState extends State<Folios_Screen> {
       throw Exception('NO se pudo');
   }
 
+
   @override
   void initState() {
     Fol().then((value){
@@ -150,12 +152,12 @@ class _Folios_ScreenState extends State<Folios_Screen> {
         provs.addAll(value);
       });
     });
+
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController controller_folio =TextEditingController();
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(

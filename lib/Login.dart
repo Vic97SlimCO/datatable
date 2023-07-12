@@ -148,7 +148,7 @@ shared_preferences() async {
                                             await prefs.setString('Usuario',nameController.text);
                                             await prefs.setString('Contrasena',passwordController.text);
                                             Navigator.push(context,
-                                                MaterialPageRoute(builder: (context) => new menu_opciones(user: userid)));
+                                                MaterialPageRoute(builder: (context) => new Menu(user: userid)));
                                           }
                                         }
                                       },

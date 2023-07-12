@@ -9,7 +9,7 @@ import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'Modelo_contenedor/slim_container.dart';
 
 
-class Sub_Folios extends StatefulWidget {
+/*class Sub_Folios extends StatefulWidget {
   String user;
   Folio_Container item_folio;
   Sub_Folios({Key? key,required this.user,required this.item_folio}) : super(key: key);
@@ -27,7 +27,7 @@ class _Sub_FoliosState extends State<Sub_Folios> {
       home: AccMX_Screen(user: widget.user,item_folio: widget.item_folio,),
     );
   }
-}
+}*/
 
 class AccMX_Screen extends StatefulWidget {
   Folio_Container item_folio;
@@ -73,7 +73,7 @@ class _AccMX_ScreenState extends State<AccMX_Screen> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(onPressed: (){
-          Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>Folios_Vista(user: widget.user)), (route) => false);
+          Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>List_Folios(user: widget.user)), (route) => false);
         }, icon: Icon(Icons.arrow_back)),
         actions: <Widget>[
           IconButton(onPressed: (){
@@ -119,7 +119,7 @@ class _AccMX_ScreenState extends State<AccMX_Screen> {
                        child: FadeInAnimation(
                          child: GestureDetector(
                              onTap: (){
-                               Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>Container_MX(user: widget.user, folio: subfolios[index])), (route) => false);
+                               Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>GRID_Container(user: widget.user, folio: subfolios[index])), (route) => false);
                              },
                               onDoubleTap: ()async{
                                 List<confirmadas_container> lista = <confirmadas_container>[];

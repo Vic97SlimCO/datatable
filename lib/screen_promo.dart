@@ -19,7 +19,7 @@ import 'package:pasteboard/pasteboard.dart';
 import 'Modelo_contenedor/slim_container.dart';
 import 'option_menu.dart';
 
-class stfulpromo extends StatefulWidget {
+/*class stfulpromo extends StatefulWidget {
   String user;
    stfulpromo({Key? key,required this.user}) : super(key: key);
 
@@ -37,7 +37,7 @@ class _stfulpromoState extends State<stfulpromo> {
       home: Promotion_screen(user: widget.user,),
     );
   }
-}
+}*/
 
 class Promotion_screen extends StatefulWidget {
   String user;

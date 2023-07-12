@@ -19,7 +19,7 @@ import 'folios.dart';
 import 'option_menu.dart';
 import 'package:flutter/services.dart';
 
-class Container_MX extends StatelessWidget {
+/*class Container_MX extends StatelessWidget {
   String user;
   Folio_Container folio;
    Container_MX({Key? key,required this.user,required this.folio}) : super(key: key);
@@ -33,7 +33,7 @@ class Container_MX extends StatelessWidget {
       home: GRID_Container(user:user,folio:folio),
     );
   }
-}
+}*/
 
 class GRID_Container extends StatefulWidget {
   String user;
@@ -387,10 +387,10 @@ List<PlutoRow> row_s = <PlutoRow>[];
             IconButton(onPressed: (){
               if(widget.folio.apartado=='Acc MX'){
                 List<String> acc_mxfolio = widget.folio.folio.split('_');
-                Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>Sub_Folios(user: widget.user, item_folio: Folio_Container(folio: acc_mxfolio[0], referencia: widget.folio.referencia, fechaCreacion: widget.folio.fechaCreacion,
+                Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>AccMX_Screen(user: widget.user, item_folio: Folio_Container(folio: acc_mxfolio[0], referencia: widget.folio.referencia, fechaCreacion: widget.folio.fechaCreacion,
                     proveedor: widget.folio.proveedor, tipo: widget.folio.tipo, dias: widget.folio.dias, lead: widget.folio.lead, fechaTermino: widget.folio.fechaTermino, productosConfirmados: widget.folio.productosConfirmados,
                     apartado: widget.folio.apartado, status: widget.folio.apartado))), (Route<dynamic> route) => false);
-              }else{Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>Folios_Vista(user: widget.user)), (Route<dynamic> route) => false);}
+              }else{Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>List_Folios(user: widget.user)), (Route<dynamic> route) => false);}
             }, icon: Icon(Icons.arrow_back_ios)),
           ],
         ),
@@ -511,7 +511,7 @@ List<PlutoRow> row_s = <PlutoRow>[];
           Row(
             children: <Widget>[
               TextButton(onPressed: (){
-                Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>Confirmar_Con(user: widget.user, folio: widget.folio)), (Route<dynamic> route) => false);
+                Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>ScreenConfirmCont(user: widget.user, folio: widget.folio)), (Route<dynamic> route) => false);
               }, child: Text('CONFIRMADOS',style: TextStyle(fontSize: 18,color: Colors.white),)),
               TextButton(onPressed: (){
                 list_container.forEach((element) {
@@ -710,3 +710,5 @@ class ClassYouImplemented implements PlutoFilterType {
 
   const ClassYouImplemented();
 }
+
+
