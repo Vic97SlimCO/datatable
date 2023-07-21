@@ -86,45 +86,102 @@ class Screen_devState extends State<Screen_dev> {
   int estados_id = 0;
   String? selectedValue = '*';
   String? selectedValue1 = 'TODAS';
-  List<PlutoColumn> columns =<PlutoColumn>[
-    PlutoColumn(title: 'CODIGO', field: 'CODIGO', type: PlutoColumnType.text(),enableEditingMode: false,width: 75,hide: false),
-    PlutoColumn(title: 'DESC', field: 'DESC', type: PlutoColumnType.text(),enableEditingMode: false,width: 75,hide: false),
-    PlutoColumn(title: 'PM', field: 'PM', type: PlutoColumnType.text(),enableEditingMode: false,width: 75,hide: true),
-    PlutoColumn(title: 'VARIANTE', field: 'VAR_ID', type: PlutoColumnType.number(),enableEditingMode: false,width: 75,hide: false),
-    PlutoColumn(title: 'CANTIDAD', field: 'SHIPQTY', type: PlutoColumnType.text(),enableEditingMode: false,width: 75,hide: false),
-    PlutoColumn(title: 'AREA', field: 'AREA', type: PlutoColumnType.text(),enableEditingMode: false,width: 75,hide: false),
-    PlutoColumn(title: 'UNIDAD', field: 'UNIDAD', type: PlutoColumnType.text(),enableEditingMode: false,width: 75,hide: false),
-    PlutoColumn(title: 'FOLIO', field: 'FOLIO', type: PlutoColumnType.text(),enableEditingMode: false,width: 75,hide: false),
-    PlutoColumn(title: 'ID', field: 'ID', type: PlutoColumnType.text(),enableEditingMode: false,width: 75,hide: false),
-    PlutoColumn(title: 'DIA', field: 'DIA', type: PlutoColumnType.number(),enableEditingMode: false,width: 75,hide: true),
-    PlutoColumn(title: 'MES', field: 'MES', type: PlutoColumnType.number(),enableEditingMode: false,width: 75,hide: true),
-    PlutoColumn(title: 'ANI', field: 'ANI', type: PlutoColumnType.number(),enableEditingMode: false,width: 75,hide: true),
-    PlutoColumn(title: 'FECHA_HORA', field: 'FEC_HORA', type: PlutoColumnType.text(),enableEditingMode: false,width: 75,hide: true),
-    PlutoColumn(title: 'FECHA', field: 'FECHA', type: PlutoColumnType.text(),enableEditingMode: false,width: 75,hide: false),
-    PlutoColumn(title: 'HORA', field: 'HORA', type: PlutoColumnType.text(),enableEditingMode: false,width: 75,hide: false),
-    PlutoColumn(title: 'GUIA', field: 'TRACK', type: PlutoColumnType.text(),enableEditingMode: false,width: 75,hide: false),
-    PlutoColumn(title: 'PUBLICACION', field: 'PUB', type: PlutoColumnType.text(),enableEditingMode: false,width: 75,hide: false),
-    PlutoColumn(title: 'PAQUETERIA', field: 'PAQ', type: PlutoColumnType.text(),enableEditingMode: false,width: 75,hide: false),
-    PlutoColumn(title: 'PRODUCTO', field: 'PROD', type: PlutoColumnType.text(),enableEditingMode: false,width: 75,hide: false),
-    PlutoColumn(title: 'DESC_PROD', field: 'DSC_PROD', type: PlutoColumnType.text(),enableEditingMode: false,width: 75,hide: false),
-    PlutoColumn(title: 'NOTAS', field: 'OBVS', type: PlutoColumnType.text(),enableEditingMode: false,width: 75,hide: false),
-    PlutoColumn(title: 'NICKNAME', field: 'NICK', type: PlutoColumnType.text(),enableEditingMode: false,width: 75,hide: false),
-    PlutoColumn(title: 'NOMBRE', field: 'NAME', type: PlutoColumnType.text(),enableEditingMode: false,width: 75,hide: true),
-    PlutoColumn(title: 'ORDEN', field: 'VTA', type: PlutoColumnType.number(),enableEditingMode: false,width: 75,hide: false),
-    PlutoColumn(title: 'REVISÓ', field: 'CHECKEDBY', type: PlutoColumnType.text(),enableEditingMode: false,width: 75,hide: false),
-    PlutoColumn(title: 'ESTADO', field: 'STATUS', type: PlutoColumnType.text(),enableEditingMode: false,width: 75,hide: true),
-    PlutoColumn(title: 'ORDEN_FECHA', field: 'ORDER_DT', type: PlutoColumnType.text(),enableEditingMode: false,width: 75,hide: false),
-    PlutoColumn(title: 'DEV_LLEGADA', field: 'ARRIVED', type: PlutoColumnType.text(),enableEditingMode: false,width: 75,hide: false),
-    PlutoColumn(title: 'POR REVISAR', field: 'ISCHECKED', type: PlutoColumnType.text(),enableEditingMode: false,width: 75,hide: false),
-    PlutoColumn(title: 'USUARIO', field: 'USER', type: PlutoColumnType.number(),enableEditingMode: false,width: 75,hide: true),
-    PlutoColumn(title: 'LINK_REVISADO', field: 'LINK_C', type: PlutoColumnType.text(),enableEditingMode: true,width: 75,hide: false),
-  ];
+  List<PlutoColumn> columns = <PlutoColumn>[];
+  List<PlutoColumn> columnas(){
+    ismaster(){
+      bool master = false;
+      if(widget.user=='116'||widget.user=='121'){
+        master = true;
+      }
+      return master;
+    }
+    return <PlutoColumn>[
+      PlutoColumn(title: 'CODIGO', field: 'CODIGO', type: PlutoColumnType.text(),enableEditingMode: false,width: 100,hide: false),
+      PlutoColumn(title: 'DESC', field: 'DESC', type: PlutoColumnType.text(),enableEditingMode: false,width: 175,hide: false,
+      renderer: (contxt){
+        return Container(
+          child: Text(contxt.cell.value),
+        );
+      }),
+      PlutoColumn(title: 'PM', field: 'PM', type: PlutoColumnType.text(),enableEditingMode: false,width: 75,hide: true),
+      PlutoColumn(title: 'VARIANTE', field: 'VAR_ID', type: PlutoColumnType.number(),enableEditingMode: false,width: 75,hide: true),
+      PlutoColumn(title: 'CANTIDAD', field: 'SHIPQTY', type: PlutoColumnType.text(),enableEditingMode: false,width: 60,hide: false),
+      PlutoColumn(title: 'AREA', field: 'AREA', type: PlutoColumnType.text(),enableEditingMode: false,width: 125,hide: false,
+      renderer: (txt){
+        return Container(
+          color: txt.cell.value=='ACCESORIOS'?Colors.blue:Colors.pink,
+          child: Text(txt.cell.value),
+        );
+      }),
+      PlutoColumn(title: 'UNIDAD', field: 'UNIDAD', type: PlutoColumnType.text(),enableEditingMode: false,width: 75,hide: true),
+      PlutoColumn(title: 'FOLIO', field: 'FOLIO', type: PlutoColumnType.text(),enableEditingMode: false,width: 75,hide: true),
+      PlutoColumn(title: 'ID', field: 'ID', type: PlutoColumnType.text(),enableEditingMode: false,width: 75,hide: true),
+      PlutoColumn(title: 'DIA', field: 'DIA', type: PlutoColumnType.number(),enableEditingMode: false,width: 75,hide: true),
+      PlutoColumn(title: 'MES', field: 'MES', type: PlutoColumnType.number(),enableEditingMode: false,width: 75,hide: true),
+      PlutoColumn(title: 'ANI', field: 'ANI', type: PlutoColumnType.number(),enableEditingMode: false,width: 75,hide: true),
+      PlutoColumn(title: 'FECHA_HORA', field: 'FEC_HORA', type: PlutoColumnType.text(),enableEditingMode: false,width: 75,hide: true),
+      PlutoColumn(title: 'FECHA', field: 'FECHA', type: PlutoColumnType.text(),enableEditingMode: false,width: 75,hide: true),
+      PlutoColumn(title: 'HORA', field: 'HORA', type: PlutoColumnType.text(),enableEditingMode: false,width: 75,hide: false),
+      PlutoColumn(title: 'GUIA', field: 'TRACK', type: PlutoColumnType.text(),enableEditingMode: false,width: 200,hide: false),
+      PlutoColumn(title: 'PUBLICACION', field: 'PUB', type: PlutoColumnType.text(),enableEditingMode: false,width: 150,hide: false),
+      PlutoColumn(title: 'PAQUETERIA', field: 'PAQ', type: PlutoColumnType.text(),enableEditingMode: false,width: 200,hide: false),
+      PlutoColumn(title: 'PRODUCTO', field: 'PROD', type: PlutoColumnType.text(),enableEditingMode: false,width: 75,hide: true),
+      PlutoColumn(title: 'DESC_PROD', field: 'DSC_PROD', type: PlutoColumnType.text(),enableEditingMode: false,width: 75,hide: true),
+      PlutoColumn(title: 'NOTAS', field: 'OBVS', type: PlutoColumnType.text(),enableEditingMode: false,width: 75,hide: true),
+      PlutoColumn(title: 'NICKNAME', field: 'NICK', type: PlutoColumnType.text(),enableEditingMode: false,width: 75,hide: true),
+      PlutoColumn(title: 'NOMBRE', field: 'NAME', type: PlutoColumnType.text(),enableEditingMode: false,width: 75,hide: true),
+      PlutoColumn(title: 'ORDEN', field: 'VTA', type: PlutoColumnType.number(),enableEditingMode: false,width: 125,hide: false),
+      PlutoColumn(title: 'REVISÓ', field: 'CHECKEDBY', type: PlutoColumnType.text(),enableEditingMode: false,width: 85,hide: false),
+      PlutoColumn(title: 'ESTADO', field: 'STATUS', type: PlutoColumnType.text(),enableEditingMode: false,width: 75,hide: false,
+      renderer: (txt){
+        Color colosillo = Colors.white;
+        switch(txt.cell.value??''){
+          case'RI-NF':
+           colosillo = Colors.red;
+              break;
+          case'RI-FN':
+          colosillo = Colors.green;
+            break;
+        }
+        return Container(
+          color: colosillo,
+          child: Text(txt.cell.value??'',style: TextStyle(fontWeight: FontWeight.bold)),
+        );
+      }),
+      PlutoColumn(title: 'ORDEN_FECHA', field: 'ORDER_DT', type: PlutoColumnType.text(),enableEditingMode: false,width: 75,hide: true),
+      PlutoColumn(title: 'DEV_LLEGADA', field: 'ARRIVED', type: PlutoColumnType.text(),enableEditingMode: false,width: 75,hide: ismaster()),
+      PlutoColumn(title: 'POR REVISAR', field: 'ISCHECKED', type: PlutoColumnType.text(),enableEditingMode: false,width: 75,hide: true),
+      PlutoColumn(title: 'USUARIO', field: 'USER', type: PlutoColumnType.number(),enableEditingMode: false,width: 75,hide: true),
+      PlutoColumn(title: 'LINK_REVISADO', field: 'LINK_C', type: PlutoColumnType.text(),enableEditingMode: true,width: 150,hide: false),
+      PlutoColumn(title: 'EXCLUSION_REMBOLSO', field: 'EXCLU', type: PlutoColumnType.text(),enableEditingMode: true,width: 150,hide: false),
+      PlutoColumn(title: 'NOTAS', field: 'NOTAS', type: PlutoColumnType.text(),enableEditingMode: true,width: 150,hide: false),
+      PlutoColumn(title: 'RESOLUCION', field: 'RESOLU', type: PlutoColumnType.text(),enableEditingMode: false,width: 230,hide: false,
+          renderer: (txt){
+            Color colorsillo = Colors.white;
+            switch(txt.cell.value??''){
+              case'Devolución finalizada con reembolso al comprador':
+                colorsillo = Colors.red;
+                break;
+              case'Devolución finalizada. Te dimos el dinero.':
+                colorsillo = Colors.green;
+                break;
+            }
+            return Container(
+              color: colorsillo,
+              child: Text(txt.cell.value??'SIN RESOLUCION',style: TextStyle(fontWeight: FontWeight.bold),),
+            );
+          }),
+      PlutoColumn(title: 'REPUTACION', field: 'REPU', type: PlutoColumnType.text(),enableEditingMode: false,width: 150,hide: false),
+      PlutoColumn(title: 'MONTO', field: 'MONTO', type: PlutoColumnType.text(),enableEditingMode: false,width: 150,hide: false),
+    ];
+  }
   List<dev_model> lista = <dev_model>[];
   List<dev_model> lista_filter = <dev_model>[];
   String initdt = DateTime.now().toString().substring(0,10);
   String finaldt = DateTime.now().toString().substring(0,10);
   List<PlutoRow> row_s = <PlutoRow>[];
   PlutoRow item_rows(dev_model item){
+
     return PlutoRow(
         cells: {
           'CODIGO':PlutoCell(value: item.cODIGOSLIM),
@@ -158,6 +215,11 @@ class Screen_devState extends State<Screen_dev> {
           'ISCHECKED':PlutoCell(value: item.pORREVISAR),
           'USER':PlutoCell(value: item.uSERID),
           'LINK_C':PlutoCell(value: item.link_checked),
+          'EXCLU':PlutoCell(value: item.exclusion_rembolso),
+          'NOTAS':PlutoCell(value: item.notas),
+          'RESOLU':PlutoCell(value: item.resolucion),
+          'REPU':PlutoCell(value: item.reputation),
+          'MONTO':PlutoCell(value: item.money_rturn)
         });
   }
   updateManager(){
@@ -179,10 +241,11 @@ class Screen_devState extends State<Screen_dev> {
     row_s.clear();
     lista.clear();
     lista_filter.clear();
-    dev_getter().dv_list(initdt,estados_id).then((value){
+    dev_getter().dv_list(initdt,estados_id,widget.user).then((value){
       setState(() {
         lista.addAll(value);
         lista_filter= lista;
+
         lista.forEach((element) {
           if(folios.contains(element.fOLIO)){}else{
             folios.add(element.fOLIO!);
@@ -195,6 +258,9 @@ class Screen_devState extends State<Screen_dev> {
   }
 @override
   void initState() {
+    setState(() {
+      columns = columnas();
+    });
     getData();
     super.initState();
   }
@@ -439,6 +505,13 @@ class Screen_devState extends State<Screen_dev> {
                 ),
               ),
             ),
+            SizedBox(width: 20,),
+            Visibility(
+              visible: widget.user=='116'||widget.user=='121'?true:false,
+              child: ElevatedButton(onPressed: (){
+
+              }, child: Text('Un\nboton')),
+            )
           ],
         ),
       ),
@@ -459,10 +532,18 @@ class Screen_devState extends State<Screen_dev> {
                       onChanged:(PlutoGridOnChangedEvent event) async {
                        switch(event.column.field){
                          case'LINK_C':
-                        await dev_getter().ADD_link(event.row.cells["ID"]!.value,event.row.cells["VTA"]!.value.toString(),event.value);
+                        await dev_getter().ADD_link(event.row.cells["ID"]!.value,event.row.cells["VTA"]!.value.toString(),event.value,event.row.cells["EXCLU"]!.value,event.row.cells["NOTAS"]!.value);
                         await getData();
                         await updateManager();
                          break;
+                         case'RESOLU':
+                           break;
+                         case'NOTAS':
+                           await dev_getter().ADD_link(event.row.cells["ID"]!.value,event.row.cells["VTA"]!.value.toString(),event.row.cells["LINK_C"]!.value,event.row.cells["EXCLU"]!.value,event.value);
+                           break;
+                         case'EXCLU':
+                           await dev_getter().ADD_link(event.row.cells["ID"]!.value,event.row.cells["VTA"]!.value.toString(),event.row.cells["LINK_C"]!.value,event.value,event.row.cells["NOTAS"]!.value);
+                           break;
                        }
                       },
                       configuration: const PlutoGridConfiguration(localeText:PlutoGridLocaleText.spanish()),

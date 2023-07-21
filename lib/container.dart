@@ -263,7 +263,7 @@ TextEditingController control_stck = TextEditingController();
   late final PlutoGridStateManager stateManager;
   PlutoRow _buldRow(container_data data,int DIAS,int LEAD,Folio_Container folio,int control_stock){
     int pedido_sugerido = 0;
-    if(folio.apartado=='Ref MX'){
+    if(folio.apartado=='REFMX'){
     double vta_diaria =(data.vTA30NATURALES/30)+(data.aMAZON30D/30);
     double stock_real =(data.fULL+data.fULLENVIOS+data.fBA+data.cOMPRACAMINO+data.transfer+data.sTOCKCEDIS)/vta_diaria;
     if(vta_diaria != 0.0){
@@ -277,7 +277,7 @@ TextEditingController control_stck = TextEditingController();
       pedido_sugerido = 0;
     }
     }
-    if(folio.apartado=='Ref China'){
+    if(folio.apartado=='RCONT'){
      if(data.vTA30HISTORICAS!=0){
        double vta_diaria =(data.vTA30HISTORICAS/30)+(data.aMAZON30D/30);
        double stock_real =(data.fULL+data.fULLENVIOS+data.fBA+data.cOMPRACAMINO+data.transfer+data.sTOCKCEDIS)/vta_diaria;
@@ -292,7 +292,7 @@ TextEditingController control_stck = TextEditingController();
        }
      }
     }
-    if(folio.apartado == 'Contenedor'){
+    if(folio.apartado == 'ACONT'){
       if(data.vTA30HISTORICAS!=0){
         double vta_diaria =(data.vTA30HISTORICAS/30)+(data.aMAZON30D/30);
         double stock_real =(data.fULL+data.fULLENVIOS+data.fBA+data.cOMPRACAMINO+data.transfer+data.sTOCKCEDIS)/vta_diaria;
@@ -307,7 +307,7 @@ TextEditingController control_stck = TextEditingController();
       }
     //pedido_sugerido=  (((data.vTA30HISTORICAS/30)+(data.aMAZON30D/30))*(DIAS+LEAD)).toInt()-(data.sTOCKCEDIS+data.fULL+data.fULLENVIOS+data.fBA+data.cOMPRACAMINO+data.transfer).toInt();
     }
-    if(folio.apartado =='Acc MX'){
+    if(folio.apartado =='ACCMX'){
     pedido_sugerido=  (((data.vTA30HISTORICAS/30)+(data.aMAZON30D/30))*(DIAS+LEAD)).toInt()-(data.sTOCKCEDIS+data.fULL+data.fULLENVIOS+data.fBA+data.transfer).toInt();
     }
     return PlutoRow(
@@ -455,31 +455,6 @@ List<PlutoRow> row_s = <PlutoRow>[];
               ),
             ),
             SizedBox(width: 20,),
-            /*Text('AGOTAR:'),
-            Checkbox(
-                value: agotar,
-                fillColor: MaterialStateProperty.all(Color(0xFF5D5F6E)),
-                onChanged: (bool? value){
-                    setState(() {
-                      agotar = value!;
-                      String agot = ' ';
-                      if(agotar==true){agot = 'X';}
-                      row_s.clear();
-                      list_container = list_container_searcher.where((element){
-                      var agot_searcher = element.agotar;
-                      return agot_searcher.contains(agot);
-                      }).toList();
-                      list_container.forEach((element) {
-                      row_s.add(_buldRow(element,widget.folio.dias,widget.folio.lead,widget.folio,control_stock));
-                      });
-                      PlutoGridStateManager.initializeRowsAsync(headers, row_s).then((value){
-                        stateManager.refColumns.addAll(headers);
-                        stateManager.refRows.addAll(value);
-                        stateManager.setShowLoading(true);
-                      });
-               });
-            }),*/
-            SizedBox(width: 20,),
            Visibility(
                visible: sublinea(widget.folio.apartado),
                child: Container(
@@ -624,7 +599,7 @@ List<PlutoRow> row_s = <PlutoRow>[];
   }
   sublinea(String apartado){
     bool issub= false;
-    if(apartado=='Ref MX'||apartado=='Ref China'){
+    if(apartado=='REFMX'||apartado=='RCONT'){
       issub = true;
     }
     return issub;
@@ -649,7 +624,7 @@ List<PlutoRow> row_s = <PlutoRow>[];
   confirm_sugested(container_data data,int DIAS,int LEAD,Folio_Container folio,int control_stock){
     toast_impro('Confirmando Productos', true);
     int pedido_sugerido = 0;
-    if(folio.apartado=='Ref MX'){
+    if(folio.apartado=='REFMX'){
       double vta_diaria =(data.vTA30NATURALES/30)+(data.aMAZON30D/30);
       double stock_real =(data.fULL+data.fULLENVIOS+data.fBA+data.cOMPRACAMINO+data.transfer+data.sTOCKCEDIS)/vta_diaria;
       if(vta_diaria != 0.0){
@@ -664,7 +639,7 @@ List<PlutoRow> row_s = <PlutoRow>[];
         pedido_sugerido = 0;
       }
     }
-    if(folio.apartado=='Ref China'){
+    if(folio.apartado=='RCONT'){
       if(data.vTA30HISTORICAS!=0){
         double vta_diaria =(data.vTA30HISTORICAS/30)+(data.aMAZON30D/30);
         double stock_real =(data.fULL+data.fULLENVIOS+data.fBA+data.cOMPRACAMINO+data.transfer+data.sTOCKCEDIS)/vta_diaria;
@@ -681,11 +656,11 @@ List<PlutoRow> row_s = <PlutoRow>[];
         }
       }
     }
-    if(folio.apartado == 'Contenedor'){
+    if(folio.apartado == 'ACONT'){
       pedido_sugerido=  (((data.vTA30HISTORICAS/30)+(data.aMAZON30D/30))*(DIAS+LEAD)).toInt()-(data.sTOCKCEDIS+data.fULL+data.fULLENVIOS+data.fBA+data.cOMPRACAMINO+data.transfer).toInt();
       Confirmar(Cod_Slim: data.cODIGO, quantity: pedido_sugerido, folio: widget.folio.folio, user: widget.user);
     }
-    if(folio.apartado =='Acc MX'){
+    if(folio.apartado =='ACCMX'){
       pedido_sugerido=  (((data.vTA30HISTORICAS/30)+(data.aMAZON30D/30))*(DIAS+LEAD)).toInt()-(data.sTOCKCEDIS+data.fULL+data.fULLENVIOS+data.fBA+data.transfer).toInt();
       Confirmar(Cod_Slim: data.cODIGO, quantity: pedido_sugerido, folio: widget.folio.folio, user: widget.user);
     }

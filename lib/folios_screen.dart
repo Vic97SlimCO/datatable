@@ -203,7 +203,7 @@ class _List_FoliosState extends State<List_Folios> with TickerProviderStateMixin
           }
         ),
 
-      /*floatingActionButton: FloatingActionButton(
+      floatingActionButton: FloatingActionButton(
           onPressed: (){
         showDialog(context: context, builder: (BuildContext context){
           return Alert_AddFolio(user: widget.user);
@@ -212,7 +212,7 @@ class _List_FoliosState extends State<List_Folios> with TickerProviderStateMixin
           elevation: 2,
           backgroundColor: Colors.black,
           child: Icon(Icons.add,size: 25,color: Colors.white,),
-      ),*/
+      ),
       endDrawer: Drawer(
         child: ListView(
           children: [
@@ -221,7 +221,7 @@ class _List_FoliosState extends State<List_Folios> with TickerProviderStateMixin
                 child: Text('Crear folio',style: TextStyle(color: Colors.white,fontSize: 20),)),
             Row(
               children: [
-                Expanded(child: Text('Folio:',style: TextStyle(fontSize: 18),)),
+                Expanded(flex:1,child: Text('Folio:',style: TextStyle(fontSize: 18),)),
                 Expanded(flex: 3,child: Padding(
                   padding: const EdgeInsets.all(15.0),
                   child: TextField(controller: controller_folio,),
@@ -230,10 +230,10 @@ class _List_FoliosState extends State<List_Folios> with TickerProviderStateMixin
             ),
             Container(decoration: BoxDecoration(color: Colors.black),
                 child: Text('Referencia',style: TextStyle(color: Colors.white,fontSize: 20),)),
-            Expanded(child: Padding(
+            Padding(
               padding: const EdgeInsets.all(8.0),
               child: TextField(controller: controller_referencia,decoration: InputDecoration(hintText: 'Referencia'),),
-            )),
+            ),
             Container(decoration: BoxDecoration(color: Colors.black),
                 child: Text('Tipo de Contenedor',style: TextStyle(color: Colors.white,fontSize: 20),)),
             ValueListenableBuilder(
@@ -256,14 +256,14 @@ class _List_FoliosState extends State<List_Folios> with TickerProviderStateMixin
                 }),
             Container(decoration: BoxDecoration(color: Colors.black),
                 child: Text('Dias y Lead Time',style: TextStyle(color: Colors.white,fontSize: 20),)),
-            Row(
+           Row(
               children: [
-                Expanded(child: Text('Dias:',style: TextStyle(fontSize: 18),)),
+                Expanded(flex:1,child: Text('Dias:',style: TextStyle(fontSize: 18),)),
                 Expanded(flex: 2,child: Padding(
                   padding: const EdgeInsets.all(15.0),
                   child: TextField(controller: controller_dias,),
                 )),
-                Expanded(child: Text('Lead Time:',style: TextStyle(fontSize: 18),)),
+                Expanded(flex:1,child: Text('Lead Time:',style: TextStyle(fontSize: 18),)),
                 Expanded(flex: 2,child: Padding(
                   padding: const EdgeInsets.all(15.0),
                   child: TextField(controller: controller_lead,),
@@ -275,11 +275,11 @@ class _List_FoliosState extends State<List_Folios> with TickerProviderStateMixin
               child: Container(decoration: BoxDecoration(color: Colors.black),
                   child: Text('Control de stock',style: TextStyle(color: Colors.white,fontSize: 20),)),
             ),
-              Visibility(
+             Visibility(
                 visible: valor_group=='REFMX'||valor_group=='ACCMX'?true:false,
               child: Row(
                 children: [
-                  Expanded(child: Text('Control:',style: TextStyle(fontSize: 18),)),
+                  Expanded(flex:1,child: Text('Control:',style: TextStyle(fontSize: 18),)),
                   Expanded(flex: 2,child: Padding(
                     padding: const EdgeInsets.all(15.0),
                     child: TextField(controller: controller_control,),

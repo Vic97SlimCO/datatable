@@ -596,7 +596,7 @@ class _Menu extends State<Menu>{
          ),
          actions: <Widget>[
            IconButton(onPressed: () async {
-             await openFile('//192.168.10.109/Public/PROGRA/VICTOR/SlimData/SlimDataSetup.exe');
+             await openFile(is_allowedreturns()?'//192.168.10.110/Public/DEVOLUCIONES/SlimDataSetup.exe':'//192.168.10.109/Public/PROGRA/VICTOR/SlimData/SlimDataSetup.exe');
            }, icon: Icon(Icons.download))
          ],
        ),
@@ -998,7 +998,9 @@ class _Menu extends State<Menu>{
     if(widget.user=='121'
     ||widget.user=='113'
     ||widget.user=='123'
-    ||widget.user=='116'){
+    ||widget.user=='116'
+    ||widget.user=='103'
+    ||widget.user=='100'){
       value = true;
     }
     return value;

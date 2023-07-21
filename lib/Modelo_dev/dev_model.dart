@@ -33,7 +33,11 @@ class dev_model {
   bool? pORREVISAR;
   int? uSERID;
   String? link_checked;
-
+  String? exclusion_rembolso;
+  String? notas;
+  String? resolucion;
+  String? reputation;
+  String? money_rturn;
   dev_model(
       {this.cODIGOSLIM,
         this.dESCRIPCIONCORTA,
@@ -65,7 +69,12 @@ class dev_model {
         this.lLEGADADEVOLUCION,
         this.pORREVISAR,
         this.uSERID,
-        this.link_checked});
+        this.link_checked,
+        this.exclusion_rembolso,
+        this.notas,
+        this.resolucion,
+        this.reputation,
+        this.money_rturn});
 
   dev_model.fromJson(Map<String, dynamic> json) {
     cODIGOSLIM = json['CODIGO_SLIM'];
@@ -98,7 +107,12 @@ class dev_model {
     lLEGADADEVOLUCION = json['LLEGADA_DEVOLUCION'];
     pORREVISAR = json['POR_REVISAR'];
     uSERID = json['USER_ID'];
-    link_checked = json['LINK_REVISADO'];
+    link_checked = json['LINK_RECLAMO'];
+    exclusion_rembolso = json['EXCLUSION_REEMBOLSO'];
+    notas = json['NOTAS'];
+    resolucion = json['RESOLUCION'];
+    reputation = json['REPUTATION'];
+    money_rturn = json['MONEY_RETURN'];
   }
 
   Map<String, dynamic> toJson() {
@@ -134,19 +148,25 @@ class dev_model {
     data['POR_REVISAR'] = this.pORREVISAR;
     data['USER_ID'] = this.uSERID;
     data['LINK_REVISADO'] = this.link_checked;
+    data['EXCLUSION_REEMBOLSO']= this.exclusion_rembolso;
+    data['NOTAS']=this.notas;
+    data['RESOLUCION']=this.resolucion;
+    data['REPUTATION'] = this.reputation;
+    data['MONEY_RETURN']=this.money_rturn;
     return data;
   }
 }
 
 
 class dev_getter {
-  Future dv_list(String fecha,int status) async{
-    var url = Uri.parse('http://45.56.74.34:5558/ml/devoluciones/list?fecha=${fecha}&status=${status}');
-    print(Uri.parse('http://45.56.74.34:5558/ml/devoluciones/list?fecha=${fecha}&status=${status}'));
-    var response = await http.get(url);
+  Future dv_list(String fecha,int status,String user) async{
+    var url = Uri.parse('http://45.56.74.34:5558/ml/devoluciones/list?fecha=${fecha}&status=${status}&user_id=${user}');
+    print(Uri.parse('http://45.56.74.34:5558/ml/devoluciones/list?fecha=${fecha}&status=${status}&user_id=${user}'));
+    var response = await http.get(url,headers: {'Content-type': 'application/json; charset=utf-8',});
     List<dev_model> lista = <dev_model>[];
     if(response.statusCode ==200){
-      String sJson =response.body.toString();
+      //String sJson =response.body.toString();
+      String sJson =utf8.decode(response.bodyBytes);
       var Json = json.decode(sJson);
       var Jsonv = Json["data"] as List;
       print(Jsonv);
@@ -157,8 +177,8 @@ class dev_getter {
     }else
       throw Exception('NO se pudo');
   }
-  ADD_link(String id,String order_id,String url) async {
-    var request = http.Request('POST', Uri.parse('http://45.56.74.34:5558/ml/devoluciones/revisado?id=${id}&order=${order_id}&url=${url}'));
+  ADD_link(String id,String order_id,String url,String exclusion,String notas) async {
+    var request = http.Request('POST', Uri.parse('http://45.56.74.34:5558/ml/devoluciones/revisado?id=${id}&order=${order_id}&url=${url}&exclusion=${exclusion}&notas=${notas}'));
     http.StreamedResponse response = await request.send();
     if (response.statusCode == 200) {
       print(await response.stream.bytesToString());

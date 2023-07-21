@@ -1314,7 +1314,7 @@ class _users_dsgnState extends State<users_dsgn_tasks> with TickerProviderStateM
   List<users_task> tasks = <users_task>[];
   List<PlutoRow> row_s = <PlutoRow>[];
   List<DateTime?> _calendar_value = [DateTime.now()];
-  String initdt = DateTime.now().toString().substring(0,10);
+  String initdt = '2023-06-19';
   String finaldt = DateTime.now().toString().substring(0,10);
   String ischecked = 'false';
   bool valor_checked = false;
