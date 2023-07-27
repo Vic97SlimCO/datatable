@@ -681,6 +681,10 @@ class _Menu extends State<Menu>{
         allow=true;
       });
       break;
+      case'102':setState(() {
+        allow=true;
+      });
+      break;
     }
     return allow;
   }
@@ -723,6 +727,10 @@ class _Menu extends State<Menu>{
         allow=true;
       });
       break;
+      case'102':setState(() {
+        allow=true;
+      });
+      break;
     }
     return allow;
   }
@@ -762,6 +770,10 @@ class _Menu extends State<Menu>{
       });
       break;
       case'118':setState(() {
+        allow=true;
+      });
+      break;
+      case'102':setState(() {
         allow=true;
       });
       break;
@@ -863,6 +875,10 @@ class _Menu extends State<Menu>{
         allow=true;
       });
       break;
+      case'102':setState(() {
+        allow=true;
+      });
+      break;
     }
     return allow;
   }
@@ -941,6 +957,10 @@ class _Menu extends State<Menu>{
         allow=true;
       });
       break;
+      case'102':setState(() {
+        allow=true;
+      });
+      break;
     }
     return allow;
   }
@@ -983,12 +1003,16 @@ class _Menu extends State<Menu>{
         allow=true;
       });
       break;
+      case'102':setState(() {
+        allow=true;
+      });
+      break;
     }
     return allow;
   }
   is_allowedTKN(){
     bool value = false;
-    if(widget.user=='101'||widget.user=='103'||widget.user=='33'||widget.user=='101'||widget.user=='121'||widget.user=='1057'){
+    if(widget.user=='101'||widget.user=='103'||widget.user=='33'||widget.user=='101'||widget.user=='121'||widget.user=='1057'||widget.user=='121'){
       value = true;
     }
     return value;
@@ -1000,7 +1024,8 @@ class _Menu extends State<Menu>{
     ||widget.user=='123'
     ||widget.user=='116'
     ||widget.user=='103'
-    ||widget.user=='100'){
+    ||widget.user=='100'
+    ||widget.user=='121'){
       value = true;
     }
     return value;

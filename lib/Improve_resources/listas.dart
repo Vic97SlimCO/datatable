@@ -16,6 +16,7 @@ List<PlutoColumn> Petercolumn = <PlutoColumn>[
         'Accesorios'
       ]
   ),enableContextMenu: true),
+  PlutoColumn(title: 'PROVEEDOR', field: 'NOTAYS', type: PlutoColumnType.text(),enableEditingMode: true,width: 95),
   PlutoColumn(title: 'CODIGO', field: 'CODIGO', type: PlutoColumnType.text(),enableEditingMode: false,width: 110),
   PlutoColumn(title: 'DESCRIPCION', field: 'COD_DSC', type: PlutoColumnType.text(),enableEditingMode: false,width: 200,
       renderer: (contxt){
@@ -170,6 +171,7 @@ List<PlutoColumn> Alecolumn = <PlutoColumn>[
         'Accesorios'
       ]
   ),enableContextMenu: true),
+  PlutoColumn(title: 'PROVEEDOR', field: 'NOTAYS', type: PlutoColumnType.text(),enableEditingMode: true,width: 95),
   PlutoColumn(title: 'CODIGO', field: 'CODIGO', type: PlutoColumnType.text(),enableEditingMode: false,width: 110),
   PlutoColumn(title: 'DESCRIPCION', field: 'COD_DSC', type: PlutoColumnType.text(),enableEditingMode: false,width: 200,
       renderer: (contxt){
@@ -334,7 +336,7 @@ List<PlutoColumn> yazzcolumn = <PlutoColumn>[
         child: Text(conxt.cell.value,style: TextStyle(color: Colors.white),),
         );
         }),
-  PlutoColumn(title: 'NOTAS', field: 'NOTAYS', type: PlutoColumnType.text(),enableEditingMode: true,width: 95),
+  PlutoColumn(title: 'PROVEEDOR', field: 'NOTAYS', type: PlutoColumnType.text(),enableEditingMode: true,width: 95),
   PlutoColumn(title: 'CODIGO', field: 'CODIGO', type: PlutoColumnType.text(),enableEditingMode: false,width: 110),
   PlutoColumn(title: 'DESCRIPCION', field: 'COD_DSC', type: PlutoColumnType.text(),enableEditingMode: false,width: 200,
       renderer: (contxt){
@@ -522,7 +524,7 @@ List<PlutoColumn> colums = <PlutoColumn>[
           child: Text(conxt.cell.value,style: TextStyle(color: Colors.white),),
         );
       }),
-  PlutoColumn(title: 'NOTAS', field: 'NOTAYS', type: PlutoColumnType.text(),enableEditingMode: true,width: 95),
+  PlutoColumn(title: 'PROVEEDOR', field: 'NOTAYS', type: PlutoColumnType.text(),enableEditingMode: true,width: 95),
   PlutoColumn(title: 'CODIGO', field: 'CODIGO', type: PlutoColumnType.text(),enableEditingMode: false,width: 110),
   PlutoColumn(title: 'DESCRIPCION', field: 'COD_DSC', type: PlutoColumnType.text(),enableEditingMode: false,width: 200,
       renderer: (contxt){
@@ -709,6 +711,7 @@ List<PlutoColumn> colums_DGN = <PlutoColumn>[
         );
       }
   ),
+  PlutoColumn(title: 'PROVEEDOR', field: 'NOTAYS', type: PlutoColumnType.text(),enableEditingMode: false,width: 95),
   PlutoColumn(title: 'CODIGO', field: 'CODIGO', type: PlutoColumnType.text(),enableEditingMode: false,width: 110),
   PlutoColumn(title: 'DESCRIPCION', field: 'COD_DSC', type: PlutoColumnType.text(),enableEditingMode: false,width: 200,
       renderer: (contxt){
@@ -834,6 +837,7 @@ List<PlutoColumn> colums_MKT = <PlutoColumn>[
         );
       }
   ),
+  PlutoColumn(title: 'PROVEEDOR', field: 'NOTAYS', type: PlutoColumnType.text(),enableEditingMode: false,width: 95),
   PlutoColumn(title: 'CODIGO', field: 'CODIGO', type: PlutoColumnType.text(),enableEditingMode: false,width: 110),
   PlutoColumn(title: 'DESCRIPCION', field: 'COD_DSC', type: PlutoColumnType.text(),enableEditingMode: false,width: 200,
       renderer: (contxt){

@@ -263,7 +263,7 @@ TextEditingController control_stck = TextEditingController();
   late final PlutoGridStateManager stateManager;
   PlutoRow _buldRow(container_data data,int DIAS,int LEAD,Folio_Container folio,int control_stock){
     int pedido_sugerido = 0;
-    if(folio.apartado=='REFMX'){
+    if(folio.apartado=='Ref MX'){
     double vta_diaria =(data.vTA30NATURALES/30)+(data.aMAZON30D/30);
     double stock_real =(data.fULL+data.fULLENVIOS+data.fBA+data.cOMPRACAMINO+data.transfer+data.sTOCKCEDIS)/vta_diaria;
     if(vta_diaria != 0.0){
@@ -277,7 +277,7 @@ TextEditingController control_stck = TextEditingController();
       pedido_sugerido = 0;
     }
     }
-    if(folio.apartado=='RCONT'){
+    if(folio.apartado=='Ref China'){
      if(data.vTA30HISTORICAS!=0){
        double vta_diaria =(data.vTA30HISTORICAS/30)+(data.aMAZON30D/30);
        double stock_real =(data.fULL+data.fULLENVIOS+data.fBA+data.cOMPRACAMINO+data.transfer+data.sTOCKCEDIS)/vta_diaria;
@@ -288,11 +288,12 @@ TextEditingController control_stck = TextEditingController();
          print(pedido_sugerido.toInt().toString());
        pedido_sugerido=  sugested(pedido_sugerido);
        }else{
+         pedido_sugerido = (dias_falt*vta_diaria).toInt();
        pedido_sugerido = sugested(pedido_sugerido);
        }
      }
     }
-    if(folio.apartado == 'ACONT'){
+    if(folio.apartado == 'Contenedor'){
       if(data.vTA30HISTORICAS!=0){
         double vta_diaria =(data.vTA30HISTORICAS/30)+(data.aMAZON30D/30);
         double stock_real =(data.fULL+data.fULLENVIOS+data.fBA+data.cOMPRACAMINO+data.transfer+data.sTOCKCEDIS)/vta_diaria;
@@ -302,12 +303,13 @@ TextEditingController control_stck = TextEditingController();
           pedido_sugerido = (dias_falt*vta_diaria).toInt()+(vta_diaria*15).toInt();
           pedido_sugerido=  sugested(pedido_sugerido);
         }else{
+          pedido_sugerido = (dias_falt*vta_diaria).toInt();
           pedido_sugerido = sugested(pedido_sugerido);
         }
       }
     //pedido_sugerido=  (((data.vTA30HISTORICAS/30)+(data.aMAZON30D/30))*(DIAS+LEAD)).toInt()-(data.sTOCKCEDIS+data.fULL+data.fULLENVIOS+data.fBA+data.cOMPRACAMINO+data.transfer).toInt();
     }
-    if(folio.apartado =='ACCMX'){
+    if(folio.apartado =='Acc MX'){
     pedido_sugerido=  (((data.vTA30HISTORICAS/30)+(data.aMAZON30D/30))*(DIAS+LEAD)).toInt()-(data.sTOCKCEDIS+data.fULL+data.fULLENVIOS+data.fBA+data.transfer).toInt();
     }
     return PlutoRow(

@@ -25,20 +25,20 @@ class _Devoluciones_mainState extends State<Devoluciones_main> {
     List<Widget> _buildScreens() {
       return [
         Screen_dev(user: widget.user),
-        Center(child: Image.network('https://img.freepik.com/vector-gratis/diseno-estilo-grunge-rojo-proximamente_1017-26691.jpg?w=2000'),),
+        llegada_screen(user: widget.user)
       ];
     }
     List<PersistentBottomNavBarItem> _navBarsItems(){
       return [
         PersistentBottomNavBarItem(
         icon:  Icon(CupertinoIcons.arrow_2_circlepath_circle_fill),
-          title: ("Reclamos por revisar"),
+          title: ("Reclamos\npor\nrevisar"),
           activeColorPrimary: CupertinoColors.black,
           inactiveColorPrimary: CupertinoColors.systemGrey,
         ),
         PersistentBottomNavBarItem(
           icon:  Icon(CupertinoIcons.arrow_2_circlepath_circle_fill),
-          title: ("Coming soon"),
+          title: ("Llegada"),
           activeColorPrimary: CupertinoColors.black,
           inactiveColorPrimary: CupertinoColors.systemGrey,
         ),
@@ -87,6 +87,7 @@ class Screen_devState extends State<Screen_dev> {
   String? selectedValue = '*';
   String? selectedValue1 = 'TODAS';
   List<PlutoColumn> columns = <PlutoColumn>[];
+  bool ischecked = false;
   List<PlutoColumn> columnas(){
     ismaster(){
       bool master = false;
@@ -173,6 +174,27 @@ class Screen_devState extends State<Screen_dev> {
           }),
       PlutoColumn(title: 'REPUTACION', field: 'REPU', type: PlutoColumnType.text(),enableEditingMode: false,width: 150,hide: false),
       PlutoColumn(title: 'MONTO', field: 'MONTO', type: PlutoColumnType.text(),enableEditingMode: false,width: 150,hide: false),
+      /*PlutoColumn(title: 'POR REVISAR', field: 'CHECKED',
+        type: PlutoColumnType.select(
+      <String>[
+        'REVISADO!','POR REVISAR'
+        ],
+      ),
+        renderer:(txt){
+        _change(){
+          Color colorsillo = Colors.grey;
+          switch(txt.cell.value){
+            case'REVISADO!':colorsillo = Colors.green;break;
+            case'POR REVISAR':colorsillo = Colors.red; break;
+          }
+          return colorsillo;
+          }
+         return Container(
+           color: _change(),
+           child: Text(txt.cell.value),
+         );
+        }
+        , enableContextMenu: true,width: 150,hide: false,)*/
     ];
   }
   List<dev_model> lista = <dev_model>[];
@@ -180,8 +202,8 @@ class Screen_devState extends State<Screen_dev> {
   String initdt = DateTime.now().toString().substring(0,10);
   String finaldt = DateTime.now().toString().substring(0,10);
   List<PlutoRow> row_s = <PlutoRow>[];
+  late TabController tabController;
   PlutoRow item_rows(dev_model item){
-
     return PlutoRow(
         cells: {
           'CODIGO':PlutoCell(value: item.cODIGOSLIM),
@@ -219,7 +241,8 @@ class Screen_devState extends State<Screen_dev> {
           'NOTAS':PlutoCell(value: item.notas),
           'RESOLU':PlutoCell(value: item.resolucion),
           'REPU':PlutoCell(value: item.reputation),
-          'MONTO':PlutoCell(value: item.money_rturn)
+          'MONTO':PlutoCell(value: item.money_rturn),
+          //'CHECKED':PlutoCell(value: item.por_revisar==false?'POR REVISAR':'REVISADO!')
         });
   }
   updateManager(){
@@ -231,6 +254,15 @@ class Screen_devState extends State<Screen_dev> {
       });
     });
   }
+  Future<void> handleRemoveSelectedRowsButton() async {
+    for (var element in stateManager!.currentSelectingRows) {
+      //event.row.cells["ID"]!.value
+      //designmkt_class().update_tasks('STATUS','Completado',element.cells["ID"]!.value);
+      await dev_getter().is_CHECKED(element.cells["ID"]!.value.toString(),element.cells["VTA"]!.value.toString(),true);
+    }
+    stateManager.removeRows(stateManager.currentSelectingRows);
+  }
+
   getData(){
     if(folios.length>1){
       setState(() {
@@ -241,7 +273,7 @@ class Screen_devState extends State<Screen_dev> {
     row_s.clear();
     lista.clear();
     lista_filter.clear();
-    dev_getter().dv_list(initdt,estados_id,widget.user).then((value){
+    dev_getter().dv_list(initdt,estados_id,widget.user,ischecked).then((value){
       setState(() {
         lista.addAll(value);
         lista_filter= lista;
@@ -507,11 +539,27 @@ class Screen_devState extends State<Screen_dev> {
             ),
             SizedBox(width: 20,),
             Visibility(
-              visible: widget.user=='116'||widget.user=='121'?true:false,
-              child: ElevatedButton(onPressed: (){
-
-              }, child: Text('Un\nboton')),
-            )
+              visible: widget.user=='116'||widget.user=='121'||widget.user=='103'||widget.user=='100'?true:false,
+              child: Column(
+                children: [
+                  Text('Todos',style: TextStyle(fontSize: 12),),
+                  Checkbox(
+                      value: ischecked,
+                      onChanged: (bool? change){
+                        setState(() {
+                          ischecked=change!;
+                          getData();
+                          updateManager();
+                        });
+                      }
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(width: 20,),
+            ElevatedButton(onPressed:(){
+              handleRemoveSelectedRowsButton();
+            }, child: Text('Completar'))
           ],
         ),
       ),
@@ -530,20 +578,24 @@ class Screen_devState extends State<Screen_dev> {
                         stateManager.setShowColumnFilter(true);
                       },
                       onChanged:(PlutoGridOnChangedEvent event) async {
+                       print(event.column.field+'-'+event.value);
                        switch(event.column.field){
                          case'LINK_C':
-                        await dev_getter().ADD_link(event.row.cells["ID"]!.value,event.row.cells["VTA"]!.value.toString(),event.value,event.row.cells["EXCLU"]!.value,event.row.cells["NOTAS"]!.value);
-                        await getData();
-                        await updateManager();
+                        await dev_getter().ADD_link(event.row.cells["ID"]!.value,event.row.cells["VTA"]!.value.toString(),'&url='+(event.value).toString());
+                        /*await getData();
+                        await updateManager();*/
                          break;
                          case'RESOLU':
                            break;
                          case'NOTAS':
-                           await dev_getter().ADD_link(event.row.cells["ID"]!.value,event.row.cells["VTA"]!.value.toString(),event.row.cells["LINK_C"]!.value,event.row.cells["EXCLU"]!.value,event.value);
+                           await dev_getter().ADD_link(event.row.cells["ID"]!.value,event.row.cells["VTA"]!.value.toString(),'&notas='+(event.value).toString());
                            break;
                          case'EXCLU':
-                           await dev_getter().ADD_link(event.row.cells["ID"]!.value,event.row.cells["VTA"]!.value.toString(),event.row.cells["LINK_C"]!.value,event.value,event.row.cells["NOTAS"]!.value);
+                           await dev_getter().ADD_link(event.row.cells["ID"]!.value,event.row.cells["VTA"]!.value.toString(),'&exclusion='+(event.value).toString());
                            break;
+                         /*case'CHECKED':
+                           await dev_getter().ADD_link(event.row.cells["ID"]!.value,event.row.cells["VTA"]!.value.toString(),'&checked='+event.value=='POR REVISAR'?'false':'true');
+                           break;*/
                        }
                       },
                       configuration: const PlutoGridConfiguration(localeText:PlutoGridLocaleText.spanish()),
@@ -588,3 +640,119 @@ class Screen_devState extends State<Screen_dev> {
   }
 }
 
+class llegada_screen extends StatefulWidget {
+  String user;
+  llegada_screen({Key? key,required this.user}) : super(key: key);
+
+  @override
+  State<llegada_screen> createState() => _llegada_screenState();
+}
+
+class _llegada_screenState extends State<llegada_screen> {
+  List<PlutoColumn> columns = <PlutoColumn>[];
+  List<PlutoRow> row_s = <PlutoRow>[];
+  List<llegaran> lista = <llegaran>[];
+  late final PlutoGridStateManager stateManager;
+  List<PlutoColumn> columnas(){
+    return <PlutoColumn>[
+      PlutoColumn(title: 'ID', field: 'ID', type: PlutoColumnType.text(),enableEditingMode: false,width: 100,hide: false),
+      PlutoColumn(title: 'TITULO', field: 'TITLE', type: PlutoColumnType.text(),enableEditingMode: false,width: 175,hide: false,),
+      PlutoColumn(title: 'ITEM', field: 'ITEM', type: PlutoColumnType.text(),enableEditingMode: false,width: 175,hide: false),
+      PlutoColumn(title: 'LAST_UPDATE', field: 'LAST', type: PlutoColumnType.text(),enableEditingMode: false,width: 175,hide: false),
+      PlutoColumn(title: 'LLEGADA', field: 'LLEGADA', type: PlutoColumnType.text(),enableEditingMode: false,width: 160,hide: false),
+      PlutoColumn(title: 'CHECKED', field: 'CHECKED', type: PlutoColumnType.text(),enableEditingMode: false,width: 125,hide: false,),
+      PlutoColumn(title: 'REVISADO', field: 'REVISADO', type: PlutoColumnType.text(),enableEditingMode: false,width: 175,hide: false),
+      PlutoColumn(title: 'FECHA_REVISADO', field: 'FEC_REV', type: PlutoColumnType.text(),enableEditingMode: false,width: 175,hide: false),
+      PlutoColumn(title: 'ESTADO', field: 'ESTADO', type: PlutoColumnType.text(),enableEditingMode: false,width: 175,hide: false),
+      PlutoColumn(title: 'ENTRADA', field: 'ENTRADA', type: PlutoColumnType.number(),enableEditingMode: false,width: 175,hide: false),
+    ];
+  }
+  PlutoRow item_rows(llegaran task){
+    return PlutoRow(
+        cells: {
+          'ID':PlutoCell(value: task.oRDERID),
+          'TITLE':PlutoCell(value: task.tITLE),
+          'ITEM':PlutoCell(value: task.iTEMID),
+          'LAST':PlutoCell(value: task.lASTUPDATED),
+          'LLEGADA':PlutoCell(value: task.lLEGADADEVOLUCION),
+          'CHECKED':PlutoCell(value: task.pORREVISAR),
+          'REVISADO':PlutoCell(value: task.rEVISADO),
+          'FEC_REV':PlutoCell(value: task.dATEDREVISADO),
+          'ESTADO':PlutoCell(value: task.eSTADO),
+          'ENTRADA':PlutoCell(value: task.fECHAENTRADACEDIS),
+        });
+  }
+
+void get_arrived_data(){
+    llegaran_class().dv_list().then((value) => {
+    setState(() {
+    lista.addAll(value);
+    lista.forEach((element) {
+      setState(() {
+        row_s.add(item_rows(element));
+          });
+        });
+      })
+    });
+}
+  updateManager(){
+    setState(() {
+      PlutoGridStateManager.initializeRowsAsync(columns, row_s).then((value){
+        stateManager.refColumns.addAll(columns);
+        stateManager.refRows.addAll(value);
+        stateManager.setShowLoading(true);
+      });
+    });
+  }
+
+@override
+  void initState() {
+    setState(() {
+      columns= columnas();
+      get_arrived_data();
+      updateManager();
+    });
+    super.initState();
+  }
+
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(onPressed: (){
+          PersistentNavBarNavigator.pushNewScreen(
+              context,
+              screen: Menu(user: widget.user),
+              withNavBar: false);
+        }, icon: Icon(Icons.arrow_back)),
+        title: Row(
+          children: [
+            Text('Llegada')
+          ],
+        ),
+      ),
+      body: SafeArea(
+          child: Column(
+            children: [
+              Expanded(
+                  child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: PlutoGrid(
+                        columns: columns,
+                        rows:row_s,
+                        configuration: const PlutoGridConfiguration(localeText:PlutoGridLocaleText.spanish()),
+                        onLoaded: (PlutoGridOnLoadedEvent vnt){
+                          stateManager = vnt.stateManager;
+                          vnt.stateManager.setSelectingMode(PlutoGridSelectingMode.row);
+                          stateManager.setShowColumnFilter(true);
+                        },
+                      ),
+                    )
+                ),
+            ],
+          ),
+      ),
+    );
+  }
+}

@@ -292,6 +292,7 @@ class designmkt_class {
     print('http://45.56.74.34:6660/update_task?ATTRIB=${ATTRIB}&VALUE=${VALUE}&ID=${ID}');
     http.StreamedResponse response = await request.send();
     if (response.statusCode == 200) {
+      toast_dsgn('Cambio efectuado', true);
       print(await response.stream.bytesToString());
     }
     else {
@@ -466,6 +467,7 @@ class users_task {
   String? tipo;
   String? precio_AMZN;
   String? precio_SHEIN;
+  String?  proveedor;
 
   users_task(
       {this.id,
@@ -495,6 +497,7 @@ class users_task {
         this.aMZN,
         this.sHEIN,
         this.tipo,
+        this.proveedor,
   this.precio_AMZN,
   this.precio_SHEIN});
 
@@ -528,6 +531,7 @@ class users_task {
     tipo = json['tipo'];
     precio_AMZN = json['precioAMZN'];
     precio_SHEIN = json['precioSHEIN'];
+    proveedor = json['NOTAYS'];
   }
 
   Map<String, dynamic> toJson() {
@@ -561,6 +565,7 @@ class users_task {
     data['tipo'] = this.tipo;
     data['precioAMZN'] =  this.precio_AMZN;
     data['precioSHEIN'] = this.precio_SHEIN;
+    data['NOTAYS'] = this.proveedor;
     return data;
   }
 }
