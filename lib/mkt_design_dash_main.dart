@@ -123,7 +123,7 @@ class _Dash_mainState extends State<Dash_main> with TickerProviderStateMixin{
           'STOCK':PlutoCell(value: task.sTOCK),
           'CREATEDBY':PlutoCell(value: task.cREATEDBY),
           'TIPO_PUB':PlutoCell(value: task.tipoPublicacion),
-          'NOTAYS':PlutoCell(value: task.nOTAYS),
+          'PROVS':PlutoCell(value: task.nOTAYS),
           'A_CHECKED':PlutoCell(value: task.aREACHECKED),
           'A_CHECKEDBY':PlutoCell(value: task.aREACNAME),
           'TIPO':PlutoCell(value: task.tipo),
@@ -161,7 +161,7 @@ class _Dash_mainState extends State<Dash_main> with TickerProviderStateMixin{
           'STOCK':PlutoCell(value: task.sTOCK),
           'CREATEDBY':PlutoCell(value: task.cREATEDBY),
           'TIPO_PUB':PlutoCell(value: task.tipoPublicacion),
-          'NOTAYS':PlutoCell(value: task.nOTAYS),
+          'PROVS':PlutoCell(value: task.nOTAYS),
           'A_CHECKED':PlutoCell(value: task.aREACHECKED),
           'A_CHECKEDBY':PlutoCell(value: task.aREACNAME),
           'TIPO':PlutoCell(value: task.tipo),
@@ -198,7 +198,7 @@ class _Dash_mainState extends State<Dash_main> with TickerProviderStateMixin{
           'STOCK':PlutoCell(value: task.sTOCK),
           'CREATEDBY':PlutoCell(value: task.cREATEDBY),
           'TIPO_PUB':PlutoCell(value: task.tipoPublicacion),
-          'NOTAYS':PlutoCell(value: task.nOTAYS),
+          'PROVS':PlutoCell(value: task.nOTAYS),
           'A_CHECKED':PlutoCell(value: task.aREACHECKED),
           'A_CHECKEDBY':PlutoCell(value: task.aREACNAME),
           'TIPO':PlutoCell(value: task.tipo),
@@ -212,7 +212,7 @@ class _Dash_mainState extends State<Dash_main> with TickerProviderStateMixin{
 
   void handleSelected() async {
     String value = '';
-    for (var element in stateManager!.currentSelectingRows) {
+    for (var element in stateManager.currentSelectingRows) {
       final cellValue = element.cells.entries.first.value.value.toString();
       print(element.cells["ID"]!.value);
       designmkt_class().update_tasks('CHECKED',true,element.cells["ID"]!.value);
@@ -251,11 +251,9 @@ class _Dash_mainState extends State<Dash_main> with TickerProviderStateMixin{
               widget.user=='14'||widget.user=='3'||
               widget.user=='16'||widget.user=='20'||
               widget.user=='101'|| widget.user=='38'||
-              widget.user=='1057'
+              widget.user=='1057'||widget.user=='33'||
+              widget.user=='29'||widget.user=='31'
           ){
-            row_s.add(item_rowsRA(element));
-          }
-          if(widget.user=='33'||widget.user=='29'||widget.user=='31'){
             row_s.add(item_rowsRA(element));
           }
           if(widget.user=='200'){
@@ -281,6 +279,7 @@ class _Dash_mainState extends State<Dash_main> with TickerProviderStateMixin{
     widget.user=='1057'
     ){
       setState(() {
+        colums.clear();
         colums=Petercolumn;
         items = ['*','SELENE'];
         items2 = ['*','Yazmin'];
@@ -288,6 +287,7 @@ class _Dash_mainState extends State<Dash_main> with TickerProviderStateMixin{
     }
     if(widget.user=='33'||widget.user=='29'||widget.user=='31'){
       setState(() {
+        colums.clear();
         colums = Alecolumn;
         items = ['*','SELENE'];
         items2 = ['*','Yazmin'];
@@ -295,6 +295,7 @@ class _Dash_mainState extends State<Dash_main> with TickerProviderStateMixin{
     }
     if(widget.user=='200'){
       setState(() {
+        colums.clear();
         colums=yazzcolumn;
       });
     }
@@ -309,7 +310,7 @@ class _Dash_mainState extends State<Dash_main> with TickerProviderStateMixin{
       final index = drawerItems.indexOf(value);
       if (index != -1) {
         tabController.index = index;
-        print(value);
+        //print(value);
         setState(() {
           valor_group = value.toString();
         });
@@ -906,7 +907,7 @@ class _Dash_mainState extends State<Dash_main> with TickerProviderStateMixin{
                         print(event.value);
                         designmkt_class().update_tasks('PRIOR',event.value,event.row.cells["ID"]!.value);
                         break;
-                      case'NOTAYS':
+                      case'PROVS':
                         print(event.value);
                         designmkt_class().update_tasks('NOTAYS',event.value,event.row.cells["ID"]!.value);
                         break;
@@ -1131,9 +1132,10 @@ class _Dash_mainState extends State<Dash_main> with TickerProviderStateMixin{
           );
         });
   }
-  _updatemanager(){
+ _updatemanager(){
+   print(colums.length.toString()+'-'+row_s.length.toString());
     setState(() {
-      PlutoGridStateManager.initializeRowsAsync(colums, row_s).then((value){
+      PlutoGridStateManager.initializeRowsAsync(colums,row_s).then((value){
         stateManager.refColumns.addAll(colums);
         stateManager.refRows.addAll(value);
         stateManager.setShowLoading(true);
@@ -1391,7 +1393,7 @@ class _users_dsgnState extends State<users_dsgn_tasks> with TickerProviderStateM
           'ID':PlutoCell(value: task.id),
           'TOPIC':PlutoCell(value: task.topic),
           'DT':PlutoCell(value: task.dateCreated?.substring(0,19)),
-          'NOTAYS':PlutoCell(value: task.proveedor),
+          'PROVS':PlutoCell(value: task.proveedor),
           'CODIGO':PlutoCell(value: task.codigoSlim),
           'COD_DSC':PlutoCell(value: task.codDesc),
           'CANAL':PlutoCell(value: task.canal),
@@ -1427,7 +1429,7 @@ class _users_dsgnState extends State<users_dsgn_tasks> with TickerProviderStateM
           'ID':PlutoCell(value: task.id),
           'TOPIC':PlutoCell(value: task.topic),
           'DT':PlutoCell(value: task.dateCreated?.substring(0,19)),
-          'NOTAYS':PlutoCell(value: task.proveedor),
+          'PROVS':PlutoCell(value: task.proveedor),
           'CODIGO':PlutoCell(value: task.codigoSlim),
           'COD_DSC':PlutoCell(value: task.codDesc),
           'CANAL':PlutoCell(value: task.canal),
@@ -1660,7 +1662,7 @@ class _users_dsgnState extends State<users_dsgn_tasks> with TickerProviderStateM
                         print(event.value);
                         designmkt_class().update_tasks('PRIOR',event.value,event.row.cells["ID"]!.value);
                         break;
-                      case'NOTAYS':
+                      case'PROVS':
                         print(event.value);
                         designmkt_class().update_tasks('NOTAYS',event.value,event.row.cells["ID"]!.value);
                         break;

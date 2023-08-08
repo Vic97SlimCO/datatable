@@ -680,7 +680,6 @@ class _MLMvtasScreenState extends State<MLMvtasScreen> {
                        atrb.addAll(value);
                      });
                    });
-
                  },
              ):Center(child: Container(width:200,height:200,child: CircularProgressIndicator())),
             ),
@@ -758,7 +757,6 @@ class _MLMvtasScreenState extends State<MLMvtasScreen> {
                         );
                       }),
                    ),
-
                 ],
               ),
             ),

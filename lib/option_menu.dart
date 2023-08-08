@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:datatable/folios.dart';
 import 'package:datatable/indices.dart';
 import 'package:datatable/mkt_design_dash_main.dart';
+import 'package:datatable/ml_mensajes.dart';
 import 'package:datatable/screen_promo.dart';
 import 'package:datatable/traspaso.dart';
 import 'package:flutter/material.dart';
@@ -558,6 +559,52 @@ class _Menu extends State<Menu>{
              )
          ),
        ),);
+     Widget _btn_mlm_msg = Padding(
+       padding:EdgeInsets.all(8.0),
+       child: GestureDetector(
+         onTap: (){
+           Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>ML_messages(user: widget.user)), (Route<dynamic> route) => false);
+         },
+         child:Container(
+             padding: EdgeInsets.all(20),
+             width: 400,
+             height: 400,
+             child:Neumorphic(
+               style: NeumorphicStyle(
+                 shadowLightColor: Colors.white,
+                 shadowDarkColor: Colors.white,
+                 shape: NeumorphicShape.concave,
+                 boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(12)),
+                 depth: 4,
+                 lightSource: LightSource.topLeft,
+               ),
+               child:Stack(
+                 fit: StackFit.loose,
+                 children: <Widget>[
+                   Align(alignment: Alignment.center,
+                     child: Image.network('https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Google_Messages_logo.svg/250px-Google_Messages_logo.svg.png'),),
+                   Align(
+                     alignment:Alignment.bottomCenter,
+                     child: NeumorphicText('MERCADO\nMENSAJES',
+                       curve: Neumorphic.DEFAULT_CURVE,
+                       style: NeumorphicStyle(
+                         intensity: 16,
+                         lightSource: LightSource.top,
+                         shadowLightColor: Colors.white,
+                         shadowDarkColor: Colors.white,
+                         depth: 4,
+                         color: Colors.black,
+                       ),
+                       textStyle: NeumorphicTextStyle(
+                         fontSize: 30,
+                         fontWeight: FontWeight.bold,
+                       ),),
+                   ),
+                 ],
+               ),
+             )
+         ),
+       ),);
      List<Widget> _botones =[
        Visibility(child: _btn_cross,visible: allow_container(),),
        Visibility(child: _btn_cont,visible: allow_container(),),
@@ -566,7 +613,8 @@ class _Menu extends State<Menu>{
        Visibility(child: _btn_improve,visible: allow_improve(),),
        Visibility(child: _btn_design_tareas,visible: allow_d_task(),),
        Visibility(child: _btn_design_tareas_users,visible: allow_u_task(),),
-       Visibility(child: _btn_design_tareas_returns,visible: is_allowedreturns(),)
+       Visibility(child: _btn_design_tareas_returns,visible: is_allowedreturns(),),
+       Visibility(child: _btn_mlm_msg,visible:is_allowedmsn(),),
      ];
      return Scaffold(
        appBar: AppBar(
@@ -1026,6 +1074,17 @@ class _Menu extends State<Menu>{
     ||widget.user=='103'
     ||widget.user=='100'
     ||widget.user=='121'){
+      value = true;
+    }
+    return value;
+  }
+  is_allowedmsn(){
+    bool value = false;
+    if(
+    widget.user=='100'
+    ||widget.user=='103'
+    ||widget.user=='121'
+    ){
       value = true;
     }
     return value;

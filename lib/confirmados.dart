@@ -1,20 +1,13 @@
 
-import 'dart:collection';
-import 'dart:developer';
-import 'dart:ffi';
 import 'dart:io';
-import 'dart:math';
 import 'dart:ui';
 
 import 'package:datatable/widgets_contenedor/widgets_confirmados.dart';
-import 'package:excel/excel.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:get/get.dart';
 import 'package:group_radio_button/group_radio_button.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
-import 'package:pasteboard/pasteboard.dart';
-import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_xlsio/xlsio.dart' as xls;
 import 'dart:convert';
 import 'dart:typed_data';

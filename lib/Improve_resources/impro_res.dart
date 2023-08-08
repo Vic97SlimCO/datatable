@@ -318,7 +318,7 @@ class MLMvtas {
 
 class MLMvtasatrb {
   String? iD;
-  String? vARIATIONID;
+  int? vARIATIONID;
   String? tITLE;
   String? sKU;
   num? pRICE;

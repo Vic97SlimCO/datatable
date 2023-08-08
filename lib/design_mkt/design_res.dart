@@ -274,7 +274,6 @@ class designmkt_class {
     if(response.statusCode ==200){
       String sJson =response.body.toString();
       var Json = json.decode(sJson);
-      print(Json["message"]);
       toast_dsgn(Json["message"], true);
       //Promo_toast(Json["message"]);
       var Jsonv = Json["data"] as List;
@@ -345,7 +344,7 @@ class Users_mkt {
     if (response.statusCode == 200) {
       String sJson = response.body.toString();
       var Json = json.decode(sJson);
-      print(Json["message"]);
+      //print(Json["message"]);
       var Jsonv = Json["data"] as List;
       for (var noteJson in Jsonv) {
         users.add(users_dsgn.fromJson(noteJson));

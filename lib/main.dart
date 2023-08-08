@@ -1,31 +1,18 @@
-import 'dart:collection';
-import 'dart:convert';
-import 'dart:ffi';
-import 'dart:io';
-import 'dart:typed_data';
 
+import 'dart:convert';
 import 'dart:ui';
 import 'package:contextmenu/contextmenu.dart';
-import 'package:data_table_2/data_table_2.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:datatable/Modelo_contenedor/model.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
-import 'package:syncfusion_flutter_xlsio/xlsio.dart' as xls;
-import 'package:pasteboard/pasteboard.dart';
 import 'package:provider/provider.dart';
-
-import 'package:url_launcher/url_launcher.dart';
 import 'Login.dart';
 import 'Modelo_contenedor/Slim_model.dart';
 import 'confirmados.dart';
 import 'package:intl/intl.dart';
 import 'listaorders.dart';
-import 'package:path/path.dart' as p;
-
-import 'option_menu.dart';
 
 void main() => runApp(
     //tree()

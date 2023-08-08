@@ -183,7 +183,7 @@ class dev_getter {
       throw Exception('NO se pudo');
   }
   ADD_link(String id,String order_id,String evento) async {
-    var request = http.Request('POST', Uri.parse('http://45.56.74.34:5558/ml/devoluciones/revisado?id=${id}&order=${order_id}${evento}'));
+    var request = http.Request('POST',Uri.parse('http://45.56.74.34:5558/ml/devoluciones/revisado?id=${id}&order=${order_id}${evento}'));
     print('http://45.56.74.34:5558/ml/devoluciones/revisado?id=${id}&order=${order_id}'+evento);
     http.StreamedResponse response = await request.send();
     if (response.statusCode == 200) {
@@ -264,9 +264,9 @@ class llegaran {
 }
 
 class llegaran_class {
-  Future dv_list() async{
-    var url = Uri.parse('http://45.56.74.34:5558/ml/devoluciones/llegaran');
-    print(Uri.parse('http://45.56.74.34:5558/ml/devoluciones/llegaran'));
+  Future dv_list(int status,String user) async{
+    var url = Uri.parse('http://45.56.74.34:5558/ml/devoluciones/llegaran?status=${status}&user_id=${user}');
+    print(Uri.parse('http://45.56.74.34:5558/ml/devoluciones/llegaran?status=${status}&user_id=${user}'));
     var response = await http.get(url,headers: {'Content-type': 'application/json; charset=utf-8',});
     List<llegaran> lista = <llegaran>[];
     if(response.statusCode ==200){
@@ -281,5 +281,68 @@ class llegaran_class {
       return lista;
     }else
       throw Exception('NO se pudo');
+  }
+}
+
+class tareas_count {
+  String? nICKNAME;
+  int? aSIGNADAS;
+
+  tareas_count({this.nICKNAME, this.aSIGNADAS});
+
+  tareas_count.fromJson(Map<String, dynamic> json) {
+    nICKNAME = json['NICKNAME'];
+    aSIGNADAS = json['ASIGNADAS'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['NICKNAME'] = this.nICKNAME;
+    data['ASIGNADAS'] = this.aSIGNADAS;
+    return data;
+  }
+}
+
+class tareas_class {
+  Future tareas_counter() async{
+    var url = Uri.parse('http://45.56.74.34:5558/ml/devoluciones/users/tareas');
+    print(Uri.parse('http://45.56.74.34:5558/ml/devoluciones/users/tareas'));
+    var response = await http.get(url,headers: {'Content-type': 'application/json; charset=utf-8',});
+    List<tareas_count> lista = <tareas_count>[];
+    if(response.statusCode ==200){
+      //String sJson =response.body.toString();
+      String sJson =utf8.decode(response.bodyBytes);
+      var Json = json.decode(sJson);
+      var Jsonv = Json["data"] as List;
+      print(Jsonv);
+      for (var noteJson in Jsonv) {
+        lista.add(tareas_count.fromJson(noteJson));
+      }
+      return lista;
+    }else
+      throw Exception('NO se pudo');
+  }
+  is_CHECKED(String id,bool checked) async {
+    var request = http.Request('POST', Uri.parse('http://45.56.74.34:5558/ml/devoluciones/revisar/tareas?id=${id}&check=${checked}'));
+    print('http://45.56.74.34:5558/ml/devoluciones/revisar/tareas?id=${id}&check=${checked}');
+    http.StreamedResponse response = await request.send();
+    if (response.statusCode == 200) {
+      print(await response.stream.bytesToString());
+      toast_dsgn('OK!', true);
+    }
+    else {
+      print(response.reasonPhrase);
+      toast_dsgn('ERROR!', false);
+    }
+  }
+  sincornizar()async{
+    var request = http.Request('GET', Uri.parse('http://45.56.74.34:5558/ml/devoluciones/users/asignar'));
+    http.StreamedResponse response = await request.send();
+    if (response.statusCode == 200) {
+      print(await response.stream.bytesToString());
+    }
+    else {
+    print(response.reasonPhrase);
+    }
   }
 }

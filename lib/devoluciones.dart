@@ -32,9 +32,10 @@ class _Devoluciones_mainState extends State<Devoluciones_main> {
       return [
         PersistentBottomNavBarItem(
         icon:  Icon(CupertinoIcons.arrow_2_circlepath_circle_fill),
-          title: ("Reclamos\npor\nrevisar"),
+          title: ("Reclamos"),
           activeColorPrimary: CupertinoColors.black,
           inactiveColorPrimary: CupertinoColors.systemGrey,
+          textStyle: TextStyle(fontSize: 20)
         ),
         PersistentBottomNavBarItem(
           icon:  Icon(CupertinoIcons.arrow_2_circlepath_circle_fill),
@@ -588,7 +589,7 @@ class Screen_devState extends State<Screen_dev> {
                          case'RESOLU':
                            break;
                          case'NOTAS':
-                           await dev_getter().ADD_link(event.row.cells["ID"]!.value,event.row.cells["VTA"]!.value.toString(),'&notas='+(event.value).toString());
+                           await dev_getter().ADD_link(event.row.cells["ID"]!.value,event.row.cells["VTA"]!.value.toString(),'&notas='+(Uri.encodeComponent(event.value)).toString());
                            break;
                          case'EXCLU':
                            await dev_getter().ADD_link(event.row.cells["ID"]!.value,event.row.cells["VTA"]!.value.toString(),'&exclusion='+(event.value).toString());
@@ -604,6 +605,12 @@ class Screen_devState extends State<Screen_dev> {
               ),
             ],
           ),),
+      floatingActionButton: FloatingActionButton(
+          backgroundColor: Theme.of(context).primaryColor,
+          onPressed: (){
+            getData();
+            updateManager();
+          },child: Icon(Icons.refresh,color: Colors.white,),),
     );
   }
   CalendarDatePicker2WithActionButtons _calendar(){
@@ -650,8 +657,12 @@ class llegada_screen extends StatefulWidget {
 
 class _llegada_screenState extends State<llegada_screen> {
   List<PlutoColumn> columns = <PlutoColumn>[];
+  List<tareas_count> tareas_a = <tareas_count>[];
   List<PlutoRow> row_s = <PlutoRow>[];
   List<llegaran> lista = <llegaran>[];
+  List<String> estados = <String>['TODAS','PENDIENTES','REVISADOS'];
+  String? selectedValue1 = 'TODAS';
+  int estados_id = 0;
   late final PlutoGridStateManager stateManager;
   List<PlutoColumn> columnas(){
     return <PlutoColumn>[
@@ -660,11 +671,11 @@ class _llegada_screenState extends State<llegada_screen> {
       PlutoColumn(title: 'ITEM', field: 'ITEM', type: PlutoColumnType.text(),enableEditingMode: false,width: 175,hide: false),
       PlutoColumn(title: 'LAST_UPDATE', field: 'LAST', type: PlutoColumnType.text(),enableEditingMode: false,width: 175,hide: false),
       PlutoColumn(title: 'LLEGADA', field: 'LLEGADA', type: PlutoColumnType.text(),enableEditingMode: false,width: 160,hide: false),
-      PlutoColumn(title: 'CHECKED', field: 'CHECKED', type: PlutoColumnType.text(),enableEditingMode: false,width: 125,hide: false,),
+      PlutoColumn(title: 'POR REVISAR', field: 'CHECKED', type: PlutoColumnType.text(),enableEditingMode: false,width: 125,hide: false,),
       PlutoColumn(title: 'REVISADO', field: 'REVISADO', type: PlutoColumnType.text(),enableEditingMode: false,width: 175,hide: false),
       PlutoColumn(title: 'FECHA_REVISADO', field: 'FEC_REV', type: PlutoColumnType.text(),enableEditingMode: false,width: 175,hide: false),
       PlutoColumn(title: 'ESTADO', field: 'ESTADO', type: PlutoColumnType.text(),enableEditingMode: false,width: 175,hide: false),
-      PlutoColumn(title: 'ENTRADA', field: 'ENTRADA', type: PlutoColumnType.number(),enableEditingMode: false,width: 175,hide: false),
+      PlutoColumn(title: 'ENTRADA', field: 'ENTRADA', type: PlutoColumnType.text(),enableEditingMode: false,width: 175,hide: false),
     ];
   }
   PlutoRow item_rows(llegaran task){
@@ -684,7 +695,11 @@ class _llegada_screenState extends State<llegada_screen> {
   }
 
 void get_arrived_data(){
-    llegaran_class().dv_list().then((value) => {
+    setState(() {
+      row_s.clear();
+      lista.clear();
+    });
+    llegaran_class().dv_list(estados_id,widget.user).then((value) => {
     setState(() {
     lista.addAll(value);
     lista.forEach((element) {
@@ -692,9 +707,23 @@ void get_arrived_data(){
         row_s.add(item_rows(element));
           });
         });
+    updateManager();
+    get_asigned();
       })
     });
 }
+
+void get_asigned(){
+    setState(() {
+      tareas_a.clear();
+    });
+    tareas_class().tareas_counter().then((value) => {
+    setState(() {
+    tareas_a.addAll(value);
+    })
+    });
+}
+
   updateManager(){
     setState(() {
       PlutoGridStateManager.initializeRowsAsync(columns, row_s).then((value){
@@ -705,12 +734,18 @@ void get_arrived_data(){
     });
   }
 
+  Future<void> handleRemoveSelectedRowsButton() async {
+    for (var element in stateManager!.currentSelectingRows) {
+      await tareas_class().is_CHECKED(element.cells["ID"]!.value.toString(),true);
+    }
+    stateManager.removeRows(stateManager.currentSelectingRows);
+  }
+
 @override
   void initState() {
     setState(() {
       columns= columnas();
       get_arrived_data();
-      updateManager();
     });
     super.initState();
   }
@@ -728,7 +763,147 @@ void get_arrived_data(){
         }, icon: Icon(Icons.arrow_back)),
         title: Row(
           children: [
-            Text('Llegada')
+            Text('Llegada'),
+            SizedBox(width: 20,),
+            DropdownButtonHideUnderline(
+              child: DropdownButton2(
+                isExpanded: true,
+                hint: Row(
+                  children: const [
+                    Icon(
+                      Icons.list,
+                      size: 16,
+                      color: Colors.white,
+                    ),
+                    SizedBox(
+                      width: 4,
+                    ),
+                    Expanded(
+                      child: Text(
+                        'Agregar usuario',
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                  ],
+                ),
+                items: estados
+                    .map((item) => DropdownMenuItem<String>(
+                  value: item,
+                  child: Text(
+                    item,
+                    style: const TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ))
+                    .toList(),
+                value: selectedValue1,
+                onChanged: (value) {
+                  setState(() {
+                    selectedValue1 = value as String;
+                    switch(selectedValue1){
+                      case'TODAS':
+                        setState(() {
+                          estados_id = 0;
+                        });
+                        break;
+                      case'PENDIENTES':
+                        setState(() {
+                          estados_id = 1;
+                        });
+                        break;
+                      case'REVISADOS':
+                        setState(() {
+                          estados_id = 2;
+                        });
+                        break;
+                    }
+                    get_arrived_data();
+                  });
+                },
+                buttonStyleData: ButtonStyleData(
+                  height: 50,
+                  width: 160,
+                  padding: const EdgeInsets.only(left: 14, right: 14),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(14),
+                    border: Border.all(
+                      color: Colors.black26,
+                    ),
+                    color: Colors.black,
+                  ),
+                  elevation: 2,
+                ),
+                iconStyleData: const IconStyleData(
+                  icon: Icon(
+                    Icons.arrow_forward_ios_outlined,
+                  ),
+                  iconSize: 14,
+                  iconEnabledColor: Colors.green,
+                  iconDisabledColor: Colors.grey,
+                ),
+                dropdownStyleData: DropdownStyleData(
+                    maxHeight: 200,
+                    width: 200,
+                    padding: null,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(14),
+                      color: Colors.black,
+                    ),
+                    elevation: 8,
+                    offset: const Offset(-20, 0),
+                    scrollbarTheme: ScrollbarThemeData(
+                      radius: const Radius.circular(40),
+                      thickness: MaterialStateProperty.all(6),
+                      thumbVisibility: MaterialStateProperty.all(true),
+                    )),
+                menuItemStyleData: const MenuItemStyleData(
+                  height: 40,
+                  padding: EdgeInsets.only(left: 14, right: 14),
+                ),
+              ),
+            ),
+            SizedBox(width: 20,),
+            ElevatedButton(onPressed: (){
+              tareas_class().sincornizar();
+              get_arrived_data();
+            }, child: Text('Sincronizar')),
+            SizedBox(width: 20,),
+            ElevatedButton(onPressed: (){
+              handleRemoveSelectedRowsButton();
+            }, child: Text('Completar')),
+            SizedBox(width: 20,),
+            Visibility(
+              visible: widget.user=='123'?false:true,
+              child: Column(children: [
+               Text(tareas_a.length>0?tareas_a[0].nICKNAME!:'',style: TextStyle(color: Colors.white),),
+                Text(tareas_a.length>0?tareas_a[0].aSIGNADAS.toString()!:'',style: TextStyle(color: Colors.white)),
+              ],),
+            ),
+            SizedBox(width: 20,),
+            Visibility(
+              visible: widget.user=='113'?false:true,
+              child: Column(children: [
+                Text(tareas_a.length>0?tareas_a[1].nICKNAME!:'',style: TextStyle(color: Colors.white)),
+                Text(tareas_a.length>0?tareas_a[1].aSIGNADAS.toString()!:'',style: TextStyle(color: Colors.white)),
+              ],),
+            ),
+            SizedBox(width: 20,),
+            Visibility(
+              visible: true,
+              child: Column(children: [
+                Text(tareas_a.length>0?tareas_a[2].nICKNAME!:'',style: TextStyle(color: Colors.white)),
+                Text(tareas_a.length>0?tareas_a[2].aSIGNADAS.toString()!:'',style: TextStyle(color: Colors.white)),
+              ],),
+            ),
           ],
         ),
       ),
@@ -753,6 +928,11 @@ void get_arrived_data(){
             ],
           ),
       ),
+      floatingActionButton: FloatingActionButton(
+      backgroundColor: Theme.of(context).primaryColor,
+      onPressed: (){
+      get_arrived_data();
+    },child: Icon(Icons.refresh,color: Colors.white,),),
     );
   }
 }
