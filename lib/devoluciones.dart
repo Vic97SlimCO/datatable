@@ -8,6 +8,7 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:pluto_grid/pluto_grid.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 
 class Devoluciones_main extends StatefulWidget {
@@ -83,10 +84,10 @@ class Screen_devState extends State<Screen_dev> {
   late final PlutoGridStateManager stateManager;
   List<DateTime?> _calendar_value = [DateTime.now()];
   List<String> folios = <String>['*'];
-  List<String> estados = <String>['TODAS','PENDIENTES','REVISADOS'];
-  int estados_id = 0;
+  List<String> estados = <String>['PENDIENTES','REVISADOS','TODAS'];
+  int estados_id = 1;
   String? selectedValue = '*';
-  String? selectedValue1 = 'TODAS';
+  String? selectedValue1 = 'PENDIENTES';
   List<PlutoColumn> columns = <PlutoColumn>[];
   bool ischecked = false;
   List<PlutoColumn> columnas(){
@@ -262,6 +263,15 @@ class Screen_devState extends State<Screen_dev> {
       await dev_getter().is_CHECKED(element.cells["ID"]!.value.toString(),element.cells["VTA"]!.value.toString(),true);
     }
     stateManager.removeRows(stateManager.currentSelectingRows);
+  }
+  _launchURL(String venta) async {
+    var url = 'https://www.mercadolibre.com.mx/ventas/${venta}/detalle';
+    Uri uri = Uri.parse(url);
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri, mode: LaunchMode.externalApplication);
+    } else {
+      throw 'No se puede abrir $url';
+    }
   }
 
   getData(){
@@ -600,6 +610,10 @@ class Screen_devState extends State<Screen_dev> {
                        }
                       },
                       configuration: const PlutoGridConfiguration(localeText:PlutoGridLocaleText.spanish()),
+                      onRowDoubleTap: (PlutoGridOnRowDoubleTapEvent event){
+                        print(event.row.cells["VTA"]!.value.toString());
+                        _launchURL(event.row.cells["VTA"]!.value.toString());
+                      },
                     ),
                   )
               ),
@@ -669,6 +683,7 @@ class _llegada_screenState extends State<llegada_screen> {
       PlutoColumn(title: 'ID', field: 'ID', type: PlutoColumnType.text(),enableEditingMode: false,width: 100,hide: false),
       PlutoColumn(title: 'TITULO', field: 'TITLE', type: PlutoColumnType.text(),enableEditingMode: false,width: 175,hide: false,),
       PlutoColumn(title: 'ITEM', field: 'ITEM', type: PlutoColumnType.text(),enableEditingMode: false,width: 175,hide: false),
+      PlutoColumn(title: 'USER', field: 'USER', type: PlutoColumnType.text(),enableEditingMode: false,width: 175,hide: false),
       PlutoColumn(title: 'LAST_UPDATE', field: 'LAST', type: PlutoColumnType.text(),enableEditingMode: false,width: 175,hide: false),
       PlutoColumn(title: 'LLEGADA', field: 'LLEGADA', type: PlutoColumnType.text(),enableEditingMode: false,width: 160,hide: false),
       PlutoColumn(title: 'POR REVISAR', field: 'CHECKED', type: PlutoColumnType.text(),enableEditingMode: false,width: 125,hide: false,),
@@ -684,6 +699,7 @@ class _llegada_screenState extends State<llegada_screen> {
           'ID':PlutoCell(value: task.oRDERID),
           'TITLE':PlutoCell(value: task.tITLE),
           'ITEM':PlutoCell(value: task.iTEMID),
+          'USER':PlutoCell(value: task.user),
           'LAST':PlutoCell(value: task.lASTUPDATED),
           'LLEGADA':PlutoCell(value: task.lLEGADADEVOLUCION),
           'CHECKED':PlutoCell(value: task.pORREVISAR),
@@ -922,6 +938,10 @@ void get_asigned(){
                           vnt.stateManager.setSelectingMode(PlutoGridSelectingMode.row);
                           stateManager.setShowColumnFilter(true);
                         },
+                        onRowDoubleTap: (PlutoGridOnRowDoubleTapEvent event){
+                          print(event.row.cells["ID"]!.value.toString());
+                          _launchURL(event.row.cells["ID"]!.value.toString());
+                        },
                       ),
                     )
                 ),
@@ -934,5 +954,14 @@ void get_asigned(){
       get_arrived_data();
     },child: Icon(Icons.refresh,color: Colors.white,),),
     );
+  }
+  _launchURL(String venta) async {
+    var url = 'https://www.mercadolibre.com.mx/ventas/${venta}/detalle';
+    Uri uri = Uri.parse(url);
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri, mode: LaunchMode.externalApplication);
+    } else {
+      throw 'No se puede abrir $url';
+    }
   }
 }

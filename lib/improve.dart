@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:file_saver/file_saver.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:pluto_grid_export/pluto_grid_export.dart' as pluto_grid_export;
 import 'package:calendar_date_picker2/calendar_date_picker2.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -29,7 +30,14 @@ class _improve_pointsState extends State<improve_points> {
   PersistentTabController _controller = PersistentTabController();
   allowedto(){
     bool allowed = false;
-    if(widget.user=='100'||widget.user=='101'||widget.user=='103'||widget.user=='121'||widget.user=='118'||widget.user=='102'||widget.user=='33'){
+    if(widget.user=='100'||
+        widget.user=='101'||
+        widget.user=='103'||
+        widget.user=='121'||
+        widget.user=='118'||
+        widget.user=='102'||
+        widget.user=='33'||
+        widget.user=='29'){
       allowed = true;
     }
     return allowed;
@@ -47,7 +55,8 @@ class _improve_pointsState extends State<improve_points> {
         allowedto()==true?MLMvtasScreen(user: widget.user):Center(child: CircularProgressIndicator(),),
         improve_items(user:widget.user),
         allowedto()==true?ASINvtas(user: widget.user,):Center(child: CircularProgressIndicator(),),
-        allowedto()==true?SKCvtas(user: widget.user,):Center(child: CircularProgressIndicator(),)
+        allowedto()==true?SKCvtas(user: widget.user,):Center(child: CircularProgressIndicator(),),
+        allowedto()==true?Co_fondeadas(user: widget.user,):Center(child: CircularProgressIndicator(),)
       ];
     }
     List<PersistentBottomNavBarItem> _navBarsItems() {
@@ -87,8 +96,19 @@ class _improve_pointsState extends State<improve_points> {
          inactiveColorPrimary: CupertinoColors.systemGrey,
        ),
         allowedto()==true?PersistentBottomNavBarItem(
-          icon: Icon(CupertinoIcons.sort_down),
+          icon: Icon(CupertinoIcons.rectangle_compress_vertical),
           title: ("Ventas x SKC"),
+          activeColorPrimary: CupertinoColors.black,
+          inactiveColorPrimary: CupertinoColors.systemGrey,
+        ):PersistentBottomNavBarItem(
+          icon: Icon(CupertinoIcons.sort_down),
+          title: ("Sin permiso para ver"),
+          activeColorPrimary: CupertinoColors.black,
+          inactiveColorPrimary: CupertinoColors.systemGrey,
+        ),
+        allowedto()==true?PersistentBottomNavBarItem(
+          icon: Icon(CupertinoIcons.rectangle_3_offgrid_fill),
+          title: ("Co-fondeadas"),
           activeColorPrimary: CupertinoColors.black,
           inactiveColorPrimary: CupertinoColors.systemGrey,
         ):PersistentBottomNavBarItem(
@@ -182,9 +202,9 @@ class _infractionsState extends State<infractions> {
                     setState(() {
                       infrac.addAll(value);
                       if(infrac.length>0){
-                        toast_impro('CONSULTA EXITOSA', true);
+                        toast_impro('CONSULTA EXITOSA', true,Duration(seconds: 2));
                       }else{
-                        toast_impro('SIN RESULTADOS', false);
+                        toast_impro('SIN RESULTADOS', false,Duration(seconds: 2));
                       }
                     });
                   });
@@ -405,9 +425,9 @@ class _infractionsState extends State<infractions> {
             setState(() {
               infrac.addAll(value);
               if(infrac.length>0){
-                toast_impro('CONSULTA EXITOSA', true);
+                toast_impro('CONSULTA EXITOSA', true,Duration(seconds: 2));
               }else{
-                toast_impro('SIN RESULTADOS', false);
+                toast_impro('SIN RESULTADOS', false,Duration(seconds: 2));
               }
             });
           });
@@ -420,9 +440,9 @@ class _infractionsState extends State<infractions> {
             setState(() {
               infrac.addAll(value);
               if(infrac.length>0){
-                toast_impro('CONSULTA EXITOSA', true);
+                toast_impro('CONSULTA EXITOSA', true,Duration(seconds: 2));
               }else{
-                toast_impro('SIN RESULTADOS', false);
+                toast_impro('SIN RESULTADOS', false,Duration(seconds: 2));
               }
             });
           });
@@ -1500,6 +1520,311 @@ class _SKCvtasState extends State<SKCvtas> {
         });
   }
 }
+
+class Co_fondeadas extends StatefulWidget {
+  String user;
+  Co_fondeadas({Key? key,required this.user}) : super(key: key);
+
+  @override
+  State<Co_fondeadas> createState() => _Co_fondeadasState();
+}
+
+class _Co_fondeadasState extends State<Co_fondeadas> {
+  String campaing = '';
+  String finaldt = DateTime.now().toString().substring(0,10);
+  String initdt = DateTime.now().subtract(Duration(days: 30)).toString().substring(0,10);
+  List<user_offers> offer_usr = <user_offers>[];
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  late final PlutoGridStateManager stateManager;
+  List<MLMvtasatrb> atrb = <MLMvtasatrb>[];
+ List<PlutoRow> rows = <PlutoRow>[];
+ List<items_offer> publicaciones = <items_offer>[];
+  List<PlutoColumn> colums = <PlutoColumn>[
+  PlutoColumn(title: 'ID', field: 'ID', type: PlutoColumnType.text(),enableEditingMode: false),
+    PlutoColumn(title: 'STATUS', field: 'STATUS', type: PlutoColumnType.text(),enableEditingMode: false),
+    PlutoColumn(title: 'PRICE', field: 'PRICE', type: PlutoColumnType.number(),enableEditingMode: false),
+    PlutoColumn(title: 'ORIGINAL', field: 'ORIGINAL', type: PlutoColumnType.number(),enableEditingMode: false),
+    PlutoColumn(title: 'OFFER', field: 'OFFER', type: PlutoColumnType.text(),enableEditingMode: false),
+    PlutoColumn(title: 'MELI', field: 'MELI', type: PlutoColumnType.number(),enableEditingMode: false),
+    PlutoColumn(title: 'SELLER', field: 'SELLER', type: PlutoColumnType.number(),enableEditingMode: false),
+    PlutoColumn(title: 'START', field: 'START', type: PlutoColumnType.text(),enableEditingMode: false),
+    PlutoColumn(title: 'END', field: 'END', type: PlutoColumnType.text(),enableEditingMode: false),
+  ];
+  List<offers_items> ofertas = <offers_items>[];
+ PlutoRow item(items_offer item){
+   return PlutoRow(
+       cells:{
+         'ID':PlutoCell(value: item.id),
+         'STATUS':PlutoCell(value: item.status),
+         'PRICE':PlutoCell(value: item.price),
+         'ORIGINAL':PlutoCell(value: item.originalPrice),
+         'OFFER':PlutoCell(value: item.offerId),
+         'MELI':PlutoCell(value: item.meliPercentage),
+         'SELLER':PlutoCell(value: item.sellerPercentage),
+         'START':PlutoCell(value: item.startDate),
+         'END':PlutoCell(value: item.endDate),
+       }
+   );
+ }
+ void getitems(String id,String type){
+   setState(() {
+     publicaciones.clear();
+     rows.clear();
+   });
+   get_offers().getitemsOffer(id, type).then((value){
+     setState(() {
+       publicaciones.addAll(value);
+       publicaciones.forEach((element) {
+         setState(() {
+           rows.add(item(element));
+         });
+       });
+       _updatemanager();
+     });
+
+   });
+ }
+
+   getItemspromo(String id){
+   get_offers().getOffersitems(id).then((value) =>{
+     setState((){
+       ofertas.addAll(value);
+     })
+   });
+ }
+
+
+  @override
+  void initState() {
+    get_offers().getOffersUSR().then((value) => {
+      setState((){
+        offer_usr.addAll(value);
+      })
+    });
+    super.initState();
+  }
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      key: _scaffoldKey,
+      appBar: AppBar(
+        leading: IconButton(onPressed: (){
+          PersistentNavBarNavigator.pushNewScreen(
+              context,
+              screen: Menu(user: widget.user),
+              withNavBar: false);
+          //Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (BuildContext context) => Menu(user: widget.user),), (route) => false,);
+        }, icon: Icon(Icons.arrow_back_ios_new_outlined)),
+        title: Row(
+          children: [
+            Text(campaing),
+          ],
+        ),
+        actions: [
+          IconButton(onPressed: (){
+            _scaffoldKey.currentState?.openEndDrawer();
+          }, icon: Icon(Icons.menu))
+        ],
+      ),
+      endDrawer: Drawer(
+        child:offer_usr.isNotEmpty?ListView.builder(
+          itemCount: offer_usr.length,
+          itemBuilder: (BuildContext context, int index) {
+           return ListTile(
+             onTap: ()async{
+              atrb.clear();
+              ofertas.clear();
+              getitems(offer_usr[index].id!, offer_usr[index].type!);
+              setState(() {
+                campaing = '${offer_usr[index].id!}-${offer_usr[index].name!}';
+              });
+             },
+             title: Text(offer_usr.length==0?'':'${offer_usr[index].id!}-${offer_usr[index].type!}'),
+             subtitle: Column(
+               mainAxisAlignment: MainAxisAlignment.start,
+               children: [
+                 Text(offer_usr.length==0?'':offer_usr[index].name!),
+                 Text(offer_usr.length==0?'':offer_usr[index].status!)
+               ],
+             ),
+
+           );
+          },
+        )
+            :Center(
+              child: SpinKitRotatingCircle(
+          itemBuilder: (BuildContext context,int index){
+              return DecoratedBox(
+                  decoration: BoxDecoration(
+                   color: Colors.green
+                  )
+              );
+          },
+        ),
+            ),
+      ),
+    body: Row(
+      children: [
+        Expanded(
+          flex: 2,
+          child: Padding(
+            padding: const EdgeInsets.all(4.0),
+            child:publicaciones.isNotEmpty? PlutoGrid(
+              columns: colums,
+              rows: rows,
+              onLoaded: (PlutoGridOnLoadedEvent vnt){
+              stateManager = vnt.stateManager;
+              vnt.stateManager.setSelectingMode(PlutoGridSelectingMode.row);
+              stateManager.setShowColumnFilter(true);
+              },
+              onRowDoubleTap: (PlutoGridOnRowDoubleTapEvent vnt)async{
+                print(vnt.row.cells["ID"]!.value);
+                atrb.clear();
+                ofertas.clear();
+               await MLMvtasclass().getMLMatrb(vnt.row.cells["ID"]!.value,initdt, finaldt).then((value){
+                  setState(() {
+                    atrb.addAll(value);
+                  });
+                });
+
+               await getItemspromo(vnt.row.cells["ID"]!.value);
+              },
+            ):Center(
+              child: SpinKitCubeGrid(
+                itemBuilder: (BuildContext context,int index){
+                  return DecoratedBox(
+                      decoration: BoxDecoration(
+                          color: Theme.of(context).primaryColor
+                      )
+                  );
+                },
+              ),
+            ),
+          ),
+        ),
+        Visibility(
+          visible: ofertas.isNotEmpty,
+          child: Expanded(
+              child: Padding(
+            padding: const EdgeInsets.all(4),
+            child: Column(
+              children: [
+                Expanded(
+                    child: Container(
+                      child: ListView.builder(
+                          itemCount: ofertas.length,
+                          itemBuilder: (BuildContext context,int index){
+                            return ListTile(
+                              title: Text(ofertas[index].id.toString()),
+                              subtitle: Column(
+                                children: [
+                                  Text('Tipo: '+ofertas[index].type.toString()),
+                                  Text('Estado: '+ofertas[index].status.toString()),
+                                  Text('Nombre: '+ofertas[index].name.toString()),
+                                  Text('Meli percent: '+ofertas[index].meliPercent.toString()),
+                                  Text('Seller percent: '+ofertas[index].sellerPercent.toString())
+                                ],
+                              ),
+                            );
+                          }),
+                    )
+                ),
+                Expanded(
+                    flex: 1,
+                    child: Neumorphic(
+                      padding: EdgeInsets.all(8),
+                      style: NeumorphicStyle(
+                          shape: NeumorphicShape.concave,
+                          boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(12)),
+                          depth: 10,
+                          intensity: 0.75,
+                          surfaceIntensity: 0.75,
+                          lightSource: LightSource.topLeft,
+                          color: Colors.white24
+                      ),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Expanded(
+                            flex:2,
+                            child: Neumorphic(
+                              padding: EdgeInsets.all(8),
+                              style: NeumorphicStyle(
+                                  shape: NeumorphicShape.convex,
+                                  boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(12)),
+                                  depth: 10,
+                                  intensity: 0.75,
+                                  surfaceIntensity: 0.75,
+                                  lightSource: LightSource.topLeft,
+                                  color: Colors.black12
+                              ),
+                              child: Column(
+                                children: [
+                                  GestureDetector(
+                                    child: Text(atrb.length==0?'':atrb[0].iD!,style: TextStyle(fontSize: 25),),
+                                  ),
+                                  Text(atrb.length==0?'':atrb[0].tITLE!,style: TextStyle(fontSize: 18),softWrap: true,),
+                                  Text(atrb.length==0?'':'PRICE: '+atrb[0].pRICE.toString(),style: TextStyle(fontSize: 15),),
+                                  Text(atrb.length==0?'':'DT CREATED: '+atrb[0].dATECREATED.toString().substring(0,10),style: TextStyle(fontSize: 15),),
+                                  Text(atrb.length==0?'':'LT UPDATE: '+atrb[0].lASTUPDATED.toString().substring(0,10),style: TextStyle(fontSize: 15),),
+                                  Text(atrb.length==0?'':'LOGISTICA: '+atrb[0].lOGISTICTYPE!,style: TextStyle(fontSize: 15),),
+                                ],
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            flex: 4,
+                            child: Container(
+                              child: ListView.builder(
+                                  padding: EdgeInsets.all(8),
+                                  shrinkWrap: true,
+                                  itemCount: atrb.length,
+                                  itemBuilder: (BuildContext context,index){
+                                       return Row(
+                                            children:[
+                                              Expanded(child: Image.network(atrb[index].pICTUREURL!),flex: 1,),
+                                              Expanded(child: Column(
+                                                mainAxisSize: MainAxisSize.min,
+                                                crossAxisAlignment: CrossAxisAlignment.center,
+                                                children: [
+                                                  Text(atrb[index].cODIGO!),
+                                                  Text(atrb[index].sKU!),
+                                                  Text('VENTAS: '+atrb[index].vENTAS.toString()),
+                                                  Text('WMS: '+atrb[index].sTOCKCEDIS.toString()),
+                                                  Text('DISPONIBLE MELI: '+atrb[index].aVAILABLEQUANTITY.toString())
+                                                ],
+                                              ),flex: 6,)
+                                            ]
+                                        );
+                                  }),
+                            ),
+                          ),
+                        ],
+                      ),
+                    )
+                )
+              ],
+            ),
+          )),
+        )
+      ],
+    ),
+    );
+  }
+  _updatemanager(){
+    print(colums.length.toString()+'-'+rows.length.toString());
+    setState(() {
+      PlutoGridStateManager.initializeRowsAsync(colums,rows).then((value){
+        stateManager.refColumns.addAll(colums);
+        stateManager.refRows.addAll(value);
+        stateManager.setShowLoading(true);
+        stateManager.setShowColumnFilter(true);
+      });
+    });
+  }
+}
+
 
 
 

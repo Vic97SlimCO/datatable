@@ -41,6 +41,9 @@ class tareas_dsgn {
   String? wip_final;
   String? precio_AMZN;
   String? precio_SHEIN;
+  int? V30AMZ;
+  int? V30ML;
+  int? V30SHEIN;
   tareas_dsgn(
       {this.id,
         this.topic,
@@ -75,9 +78,12 @@ class tareas_dsgn {
         this.status_final,
         this.wip_final,
       this.precio_AMZN,
-      this.precio_SHEIN});
+      this.precio_SHEIN,
+      this.V30AMZ,
+      this.V30ML,
+      this.V30SHEIN});
 
-  tareas_dsgn.fromJson(Map<String, dynamic> json) {
+    tareas_dsgn.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     topic = json['topic'];
     dateCreated = json['date_created'];
@@ -112,6 +118,9 @@ class tareas_dsgn {
     status_final = json['status_final'];
     precio_AMZN = json['precioAMZN'];
     precio_SHEIN = json['precioSHEIN'];
+    V30ML = json['V30ML'];
+    V30AMZ = json['V30AMZ'];
+    V30SHEIN = json['V30SHEIN'];
   }
 
   Map<String, dynamic> toJson() {
@@ -150,6 +159,9 @@ class tareas_dsgn {
     data['wip_final'] = this.wip_final;
     data['precioAMZN'] =  this.precio_AMZN;
     data['precioSHEIN'] = this.precio_SHEIN;
+    data['V30AMZ']=this.V30AMZ;
+    data['V30ML']=this.V30ML;
+    data['V30SHEIN']=this.V30SHEIN;
     return data;
   }
 }

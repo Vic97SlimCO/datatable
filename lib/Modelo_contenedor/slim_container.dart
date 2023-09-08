@@ -30,6 +30,7 @@ class container_data{
   int qUANTITY;
   int pEDIDAS;
   int aMAZON30D;
+  int sheinv30D;
   String pROVEEDORES;
   int vTA30NATURALES;
   int vTA30HISTORICAS;
@@ -57,6 +58,7 @@ class container_data{
         required this.qUANTITY,
         required this.pEDIDAS,
         required this.aMAZON30D,
+        required this.sheinv30D,
         required this.pROVEEDORES,
         required this.vTA30NATURALES,
         required this.vTA30HISTORICAS,
@@ -88,6 +90,7 @@ class container_data{
       pROVEEDORES : json['PROVEEDORES'],
       vTA30NATURALES : json['VTA30_NATURALES'],
       vTA30HISTORICAS : json['VTA30_HISTORICAS'],
+      sheinv30D: json['V30SHEIN'],
       fULL : json['FULL'],
       iMAGEN : json['IMAGEN'],
       fULLENVIOS : json['FULL_ENVIOS'],
@@ -1274,6 +1277,137 @@ class _Dialog_fullState extends State<Dialog_full> {
     );
   }
 }
+
+class HCS{
+  String? id;
+  String? dATECREATED;
+  bool? aCTIVE;
+
+  HCS({this.id, this.dATECREATED, required this.aCTIVE});
+
+  HCS.fromJson(Map<String, dynamic> json) {
+    id = json['ID'];
+    dATECREATED = json['DT_CREATED'];
+    aCTIVE = json['ACTIVE'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['ENVIO'] = this.id;
+    data['DATE_CREATED'] = this.dATECREATED;
+    data['ACTIVE'] = this.aCTIVE;
+    return data;
+  }
+}
+class get_HCS{
+  Future<List<HCS>> foliosHCS() async {
+    var url = Uri.parse('http://45.56.74.34:6660/HCS');
+    print(url);
+    List<HCS> lista = <HCS>[];
+    var response = await http.get(url);
+    if (response.statusCode ==200){
+      String sJson =response.body.toString();
+      var Jsonv = json.decode(sJson);
+      for(var notejson in Jsonv){
+        lista.add(HCS.fromJson(notejson));
+      }
+      return lista;
+    }else{
+      throw Exception('No se pudo');
+    }
+  }
+}
+class Dialog_HCS extends StatefulWidget {
+  const Dialog_HCS({Key? key}) : super(key: key);
+
+  @override
+  State<Dialog_HCS> createState() => _Dialog_HCSState();
+}
+
+class _Dialog_HCSState extends State<Dialog_HCS> {
+  List<HCS> lista = <HCS>[];
+  @override
+  void initState() {
+    get_HCS().foliosHCS().then((value){
+      setState(() {
+        lista.addAll(value);
+      });
+    });
+    super.initState();
+  }
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      content: Container(
+       width: 500,height: 500,
+      child:ListView.builder(
+          itemCount: lista.length,
+          itemBuilder: (context,index){
+            bool valor = lista[index].aCTIVE??false;
+            return ListTile(
+              title: Text(lista[index].id??'',style: TextStyle(color: Colors.black),),
+              subtitle: Text(lista[index].dATECREATED??''),
+              selected: valor,
+              trailing: Checkbox(value: valor,
+                  onChanged: (bool? val) async {
+                      var request = http.Request('GET', Uri.parse('http://45.56.74.34:6660/UpHCS/${lista[index].id}?status=${val}'));
+                      http.StreamedResponse response = await request.send();
+                      if (response.statusCode == 200) {
+                        print('${lista[index].id}${val.toString()}');
+                        print(await response.stream.bytesToString());
+                        Navigator.of(context).pop();
+                      }
+                      else {
+                        print(response.reasonPhrase);
+                        Navigator.of(context).pop();
+                      }
+
+                  }),
+            );
+          }
+      ),),
+      actions: [
+        TextButton(onPressed: () async {
+        try{
+          String? selectedDirectory = await FilePicker.platform.saveFile();
+          if(selectedDirectory ==null){
+
+          }else{
+            Accion_realizada('Accion en proceso Favor de no alterar el evento');
+            String direccion= selectedDirectory.replaceAll(r'\','/');
+            String container_name = '';
+            List<String> excelitems = <String>[];
+            var bytes= File('$direccion').readAsBytesSync();
+            var excel = Excel.decodeBytes(bytes);
+            for (var table in excel.tables.keys) {
+              for (var row in excel.tables[table]!.rows) {
+                var jaime = row.map((e) =>
+                e?.value).toList();
+                if(jaime[0].toString().trim()!='CODIGO'){
+                  print('${jaime[0]},${jaime[1]},${table.replaceAll(' ','')}');
+                  container_name = table.replaceAll(' ','');
+                  excelitems.add('{"CODIGO":"${jaime[0]}","PUB":"${jaime[1]}"}');
+                }
+              }
+            }
+            var  jsonvid = jsonDecode(excelitems.toString());
+            http.post(
+              Uri.parse('http://45.56.74.34:6660/addHCS/${container_name}'),
+              headers: <String, String>{
+                'Content-Type': 'application/json; charset=UTF-8',
+              },
+              body: jsonEncode(jsonvid),
+            );Accion_realizada('HCS Uploaded');
+          }
+        }on Exception catch(e){
+          print(e);
+        }
+      }, child: Text('Agregar Folio'))
+      ],
+    );
+  }
+}
+
 
 /*class atm_cont {
   String? cODIGO;

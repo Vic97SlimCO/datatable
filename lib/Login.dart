@@ -60,6 +60,11 @@ shared_preferences() async {
   nameController.text=prefs.getString('Usuario');
   passwordController.text=prefs.getString('Contrasena');
 }
+
+@override
+  initState(){
+  super.initState();
+  }
   @override
   Widget build(BuildContext context){
   shared_preferences();

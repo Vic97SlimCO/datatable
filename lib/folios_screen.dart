@@ -174,6 +174,13 @@ class _List_FoliosState extends State<List_Folios> with TickerProviderStateMixin
                 });
               }, child: Text('Control\nFulfillment',style: TextStyle(color: Colors.white),)),
           SizedBox(width: 20,),
+          TextButton(
+              onPressed: () async {
+                showDialog(context: context, builder: (BuildContext context){
+                  return Dialog_HCS();
+                });
+              }, child: Text('Control\nHCS',style: TextStyle(color: Colors.white),)),
+          SizedBox(width: 20,),
           IconButton(onPressed: (){
             _scaffoldKey.currentState?.openEndDrawer();
           }, icon: Icon(Icons.menu))

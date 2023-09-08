@@ -59,21 +59,21 @@ class get_infra {
       String sJson =response.body.toString();
       var Json = json.decode(sJson);
       print(Json["message"]);
-      toast_impro(Json["message"], true);
+      toast_impro(Json["message"], true,Duration(seconds: 2));
     }
     else {
       //throw Exception('Valio verga');
       String sJson =response.body.toString();
       var Json = json.decode(sJson);
       print(Json["message"]);
-      toast_impro(Json["message"], false);
+      toast_impro(Json["message"], false,Duration(seconds: 2));
     }
   }
 }
 
-toast_impro(String text,bool goodrq){
+toast_impro(String text,bool goodrq,Duration duracion){
   BotToast.showCustomText(
-    duration: Duration(seconds: 2),
+    duration: duracion,
     onlyOne: true,
     clickClose: true,
     crossPage: true,
@@ -159,7 +159,7 @@ class variation_item {
   String? sTATUS;
   String? tHUMBNAIL;
   String? cODIGO;
-  String? sTOCKCEDIS;
+  int? sTOCKCEDIS;
 
   variation_item(
       {this.sKU,
@@ -396,7 +396,7 @@ class MLMvtasclass{
       var Json = json.decode(sJson);
       print(Json);
       var Jsonv = Json["data"] as List;
-      toast_impro(Json["message"], true);
+      toast_impro(Json["message"], true,Duration(seconds: 2));
       for (var noteJson in Jsonv) {
         item_vta.add(MLMvtas.fromJson(noteJson));
       }
@@ -404,7 +404,7 @@ class MLMvtasclass{
     } else {
       String sJson = response.body.toString();
       var Json = json.decode(sJson);
-      toast_impro(Json["message"], false);
+      toast_impro(Json["message"], false,Duration(seconds: 2));
     }
 
   }
@@ -412,6 +412,7 @@ class MLMvtasclass{
   Future getMLMatrb(String id,String initdt,String finaldt) async {
     var url = Uri.parse(
         'http://45.56.74.34:6660/vtasbyMLMatrb/${id}?initdt=${initdt}&finaldt=${finaldt}');
+    print(url);
     var response = await http.get(url);
     List<MLMvtasatrb> item_atrb = <MLMvtasatrb>[];
     if (response.statusCode == 200) {
@@ -419,7 +420,7 @@ class MLMvtasclass{
       var Json = json.decode(sJson);
       print(Json);
       var Jsonv = Json["data"] as List;
-      toast_impro(Json["message"], true);
+      toast_impro(Json["message"], true,Duration(seconds: 2));
       for (var noteJson in Jsonv) {
         item_atrb.add(MLMvtasatrb.fromJson(noteJson));
       }
@@ -427,7 +428,7 @@ class MLMvtasclass{
     } else {
       String sJson = response.body.toString();
       var Json = json.decode(sJson);
-      toast_impro(Json["message"], false);
+      toast_impro(Json["message"], false,Duration(seconds: 2));
     }
   }
 
@@ -466,7 +467,7 @@ class items_improve_services{
       var Json = json.decode(sJson);
       print(Json);
       var Jsonv = Json["data"] as List;
-      toast_impro(Json["message"], true);
+      toast_impro(Json["message"], true,Duration(seconds: 2));
       for (var noteJson in Jsonv) {
         list.add(imp_items.fromJson(noteJson));
       }
@@ -474,7 +475,7 @@ class items_improve_services{
     } else {
       String sJson = response.body.toString();
       var Json = json.decode(sJson);
-      toast_impro(Json["message"], false);
+      toast_impro(Json["message"], false,Duration(seconds: 2));
     }
 
   }
@@ -562,7 +563,7 @@ class vtas_byasin{
       var Json = json.decode(sJson);
       print(Json);
       var Jsonv = Json["data"] as List;
-      toast_impro(Json["message"], true);
+      toast_impro(Json["message"], true,Duration(seconds: 2));
       for (var noteJson in Jsonv) {
         item_vta.add(ASIN_SALES.fromJson(noteJson));
       }
@@ -570,7 +571,7 @@ class vtas_byasin{
     } else {
       String sJson = response.body.toString();
       var Json = json.decode(sJson);
-      toast_impro(Json["message"], false);
+      toast_impro(Json["message"], false,Duration(seconds: 2));
     }
   }
 }
@@ -663,7 +664,7 @@ class get_skcdata{
       var Json = json.decode(sJson);
       print(Json);
       var Jsonv = Json["data"] as List;
-      toast_impro(Json["message"], true);
+      toast_impro(Json["message"], true,Duration(seconds: 2));
       for (var noteJson in Jsonv) {
         item_vta.add(skc_sales.fromJson(noteJson));
       }
@@ -671,7 +672,188 @@ class get_skcdata{
     } else {
       String sJson = response.body.toString();
       var Json = json.decode(sJson);
-      toast_impro(Json["message"], false);
+      toast_impro(Json["message"], false,Duration(seconds: 2));
+    }
+  }
+}
+
+class user_offers {
+  String? id;
+  String? type;
+  String? status;
+  String? startDate;
+  String? name;
+
+  user_offers({this.id, this.type, this.status, this.startDate, this.name});
+
+  user_offers.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    type = json['type'];
+    status = json['status'];
+    startDate = json['start_date'];
+    name = json['name'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['type'] = this.type;
+    data['status'] = this.status;
+    data['start_date'] = this.startDate;
+    data['name'] = this.name;
+    return data;
+  }
+}
+
+class items_offer {
+  String? id;
+  String? status;
+  num? price;
+  num? originalPrice;
+  String? offerId;
+  num? meliPercentage;
+  num? sellerPercentage;
+  String? startDate;
+  String? endDate;
+
+  items_offer(
+      {this.id,
+        this.status,
+        this.price,
+        this.originalPrice,
+        this.offerId,
+        this.meliPercentage,
+        this.sellerPercentage,
+        this.startDate,
+        this.endDate});
+
+  items_offer.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    status = json['status'];
+    price = json['price'];
+    originalPrice = json['original_price'];
+    offerId = json['offer_id'];
+    meliPercentage = json['meli_percentage'];
+    sellerPercentage = json['seller_percentage'];
+    startDate = json['start_date'];
+    endDate = json['end_date'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['status'] = this.status;
+    data['price'] = this.price;
+    data['original_price'] = this.originalPrice;
+    data['offer_id'] = this.offerId;
+    data['meli_percentage'] = this.meliPercentage;
+    data['seller_percentage'] = this.sellerPercentage;
+    data['start_date'] = this.startDate;
+    data['end_date'] = this.endDate;
+    return data;
+  }
+}
+
+class offers_items {
+  String? id;
+  String? type;
+  String? status;
+  String? name;
+  num? meliPercent;
+  num? sellerPercent;
+
+  offers_items(
+      {this.id,
+        this.type,
+        this.status,
+        this.name,
+        this.meliPercent,
+        this.sellerPercent});
+
+  offers_items.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    type = json['type'];
+    status = json['status'];
+    name = json['name'];
+    meliPercent = json['meli_percent'];
+    sellerPercent = json['seller_percent'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['type'] = this.type;
+    data['status'] = this.status;
+    data['name'] = this.name;
+    data['meli_percent'] = this.meliPercent;
+    data['seller_percent'] = this.sellerPercent;
+    return data;
+  }
+}
+
+
+
+class get_offers {
+  Future getOffersUSR() async {
+    var url = Uri.parse(
+        'http://45.56.74.34:6660/offer_buyer');
+    print(url);
+    var response = await http.get(url);
+    List<user_offers> list = <user_offers>[];
+    if (response.statusCode == 200) {
+      String sJson = response.body.toString();
+      var Json = json.decode(sJson);
+      print(Json);
+      toast_impro('PETICION ENTREGADA', true,Duration(seconds: 2));
+      var Jsonv = Json["data"] as List;
+      for (var noteJson in Jsonv) {
+        list.add(user_offers.fromJson(noteJson));
+      }
+      return list;
+    } else {
+      toast_impro('ERROR MERCADO LIBRE', false,Duration(seconds: 2));
+    }
+  }
+  Future getitemsOffer(id,type) async {
+    toast_impro('Esperar la respuesta del servidor', true,Duration(seconds: 3),);
+    var url = Uri.parse(
+        'http://45.56.74.34:6660/promo_items?offer=${id}&type=${type}');
+    var response = await http.get(url);
+    List<items_offer> list = <items_offer>[];
+    if (response.statusCode == 200) {
+      String sJson = response.body.toString();
+      var Json = json.decode(sJson);
+      print(Json);
+      toast_impro('Peticion Entregada', true,Duration(seconds: 2));
+      var Jsonv = Json["data"] as List;
+      for (var noteJson in Jsonv) {
+        list.add(items_offer.fromJson(noteJson));
+      }
+      return list;
+    } else {
+      /*String sJson = response.body.toString();
+      var Json = json.decode(sJson);*/
+      toast_impro("Error de canal: Mercado Libre", false,Duration(seconds: 2));
+    }
+  }
+  Future getOffersitems(id) async {
+    //toast_impro('Esperar la respuesta del servidor', true,Duration(seconds: 3),);
+    var url = Uri.parse(
+        'http://45.56.74.34:6660/items_promo?MLM=${id}');
+    var response = await http.get(url);
+    List<offers_items> list = <offers_items>[];
+    if (response.statusCode == 200) {
+      String sJson = response.body.toString();
+      var Json = json.decode(sJson);
+      print(Json);
+      toast_impro('Peticion Entregada', true,Duration(seconds: 2));
+      var Jsonv = Json["data"] as List;
+      for (var noteJson in Jsonv) {
+        list.add(offers_items.fromJson(noteJson));
+      }
+      return list;
+    } else {
+      toast_impro("Error de canal: Mercado Libre", false,Duration(seconds: 2));
     }
   }
 }

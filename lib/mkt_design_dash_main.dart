@@ -73,7 +73,7 @@ class _Dash_mainState extends State<Dash_main> with TickerProviderStateMixin{
     '*',
     'Viry',
     'Diana',
-    'MARKETING8',
+    'Angel',
     'Yitzil',
     'Gerardo',
     'Yazmin'
@@ -132,6 +132,9 @@ class _Dash_mainState extends State<Dash_main> with TickerProviderStateMixin{
           'SHEIN':PlutoCell(value: task.SHEIN),
           'STATUS_FINAL':PlutoCell(value: task.status_final),
           'WIP_FINAL':PlutoCell(value: task.wip_final),
+          'V30AMZ':PlutoCell(value: task.V30AMZ),
+          'V30ML':PlutoCell(value: task.V30ML),
+          'V30SHEIN':PlutoCell(value: task.V30SHEIN),
         });
   }
   PlutoRow item_rows(tareas_dsgn task){
@@ -170,6 +173,9 @@ class _Dash_mainState extends State<Dash_main> with TickerProviderStateMixin{
           'SHEIN':PlutoCell(value: task.SHEIN),
           'STATUS_FINAL':PlutoCell(value: task.status_final),
           'WIP_FINAL':PlutoCell(value: task.wip_final),
+          'V30AMZ':PlutoCell(value: task.V30AMZ),
+          'V30ML':PlutoCell(value: task.V30ML),
+          'V30SHEIN':PlutoCell(value: task.V30SHEIN),
     });
   }
   PlutoRow item_rowsYazz(tareas_dsgn task){
@@ -207,6 +213,9 @@ class _Dash_mainState extends State<Dash_main> with TickerProviderStateMixin{
           'SHEIN':PlutoCell(value: task.SHEIN),
           'STATUS_FINAL':PlutoCell(value: task.status_final),
           'WIP_FINAL':PlutoCell(value: task.wip_final),
+          'V30AMZ':PlutoCell(value: task.V30AMZ),
+          'V30ML':PlutoCell(value: task.V30ML),
+          'V30SHEIN':PlutoCell(value: task.V30SHEIN),
         });
   }
 
@@ -271,6 +280,7 @@ class _Dash_mainState extends State<Dash_main> with TickerProviderStateMixin{
   late Timer timers;
   @override
   void initState() {
+    print(widget.user);
     if(
     widget.user=='17'||
     widget.user=='14'||widget.user=='3'||
@@ -279,7 +289,6 @@ class _Dash_mainState extends State<Dash_main> with TickerProviderStateMixin{
     widget.user=='1057'
     ){
       setState(() {
-        colums.clear();
         colums=Petercolumn;
         items = ['*','SELENE'];
         items2 = ['*','Yazmin'];
@@ -287,15 +296,14 @@ class _Dash_mainState extends State<Dash_main> with TickerProviderStateMixin{
     }
     if(widget.user=='33'||widget.user=='29'||widget.user=='31'){
       setState(() {
-        colums.clear();
         colums = Alecolumn;
         items = ['*','SELENE'];
         items2 = ['*','Yazmin'];
       });
     }
+
     if(widget.user=='200'){
       setState(() {
-        colums.clear();
         colums=yazzcolumn;
       });
     }
@@ -1360,7 +1368,7 @@ class _users_dsgnState extends State<users_dsgn_tasks> with TickerProviderStateM
     '*',
     'Viry',
     'Diana',
-    'MARKETING8',
+    'Angel',
     'Yitzil',
     'Gerardo',
     'Yazmin'

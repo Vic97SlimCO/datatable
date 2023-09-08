@@ -182,67 +182,151 @@ class productos{
 }
 
 class cross_amazon {
-  String cODIGOSLIM;
-  String dESCRIPCIONCORTA;
-  int wMSUNIDADES;
-  int vTA30ML;
-  String? sKU;
-  int aMZV30D;
-  //String aMAZONSOLD;
-  String aSIN;
-  //int aMAZONCROSSDOCK;
-  num precio;
-  String? imagen;
-  //int aMAZONFBA;
-  String status;
+  String? cODIGO;
+  String? iD;
+  String? item;
+  String? status;
+  int? sTOCKCEDIS;
+  String? image;
+  int? quantity;
+  num? price;
+  int? mL;
+  int? aMZ;
+  int? sHEIN;
 
-  cross_amazon({
-    required this.cODIGOSLIM,
-    required this.dESCRIPCIONCORTA,
-    required this.wMSUNIDADES,
-    required this.vTA30ML,
-    required this.sKU,
-    required this.aMZV30D,
-    //required this.aMAZONSOLD,
-    required this.aSIN,
-    //required this.aMAZONCROSSDOCK,
-    required this.precio,
-    required this.imagen,
-    //required this.aMAZONFBA,
-    required this.status});
+  cross_amazon(
+      {this.cODIGO,
+        this.iD,
+        this.item,
+        this.status,
+        this.sTOCKCEDIS,
+        this.image,
+        this.quantity,
+        this.price,
+        this.mL,
+        this.aMZ,
+        this.sHEIN});
 
-  factory cross_amazon.from(Map<String,dynamic>json){
-    return cross_amazon(
-    cODIGOSLIM : json['CODIGO_SLIM'],
-    dESCRIPCIONCORTA : json['DESCRIPCION_CORTA'],
-    wMSUNIDADES : json['WMS_UNIDADES'],
-    vTA30ML : json['VTA30ML'],
-    sKU : json['SKU'],
-    aMZV30D : json['AMZV30D'],
-    //aMAZONSOLD : json['AMAZON_SOLD'],
-    aSIN : json['ASIN'],
-    //aMAZONCROSSDOCK : json['AMAZON_CROSSDOCK'],
-    precio: json['PRECIO_AMZ'],
-    imagen: json['IMAGEN'],
-    //aMAZONFBA : json['AMAZON_FBA'],
-    status: json['Status']
-    );
+  cross_amazon.fromJson(Map<String, dynamic> json) {
+    cODIGO = json['CODIGO'];
+    iD = json['ID'];
+    item = json['item'];
+    status = json['status'];
+    sTOCKCEDIS = json['STOCK_CEDIS'];
+    image = json['image'];
+    quantity = json['quantity'];
+    price = json['price'];
+    mL = json['ML'];
+    aMZ = json['AMZ'];
+    sHEIN = json['SHEIN'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['CODIGO'] = this.cODIGO;
+    data['ID'] = this.iD;
+    data['item'] = this.item;
+    data['status'] = this.status;
+    data['STOCK_CEDIS'] = this.sTOCKCEDIS;
+    data['image'] = this.image;
+    data['quantity'] = this.quantity;
+    data['price'] = this.price;
+    data['ML'] = this.mL;
+    data['AMZ'] = this.aMZ;
+    data['SHEIN'] = this.sHEIN;
+    return data;
   }
 }
 
-class list_amazon{
-  Future CROSS() async{
+class ML_paused {
+  String? cODIGO;
+  String? iD;
+  String? tITLE;
+  String? sTATUS;
+  int? sTOCKCEDIS;
+  String? tHUMBNAIL;
+  String? lOGISTICTYPE;
+  num? pRICE;
+  int? aVAILABLEQUANTITY;
+  int? mL;
+  int? aMZ;
+  int? sHEIN;
+
+  ML_paused(
+      {this.cODIGO,
+        this.iD,
+        this.tITLE,
+        this.sTATUS,
+        this.sTOCKCEDIS,
+        this.tHUMBNAIL,
+        this.lOGISTICTYPE,
+        this.pRICE,
+        this.aVAILABLEQUANTITY,
+        this.mL,
+        this.aMZ,
+        this.sHEIN});
+
+  ML_paused.fromJson(Map<String, dynamic> json) {
+    cODIGO = json['CODIGO'];
+    iD = json['ID'];
+    tITLE = json['TITLE'];
+    sTATUS = json['STATUS'];
+    sTOCKCEDIS = json['STOCK_CEDIS'];
+    tHUMBNAIL = json['THUMBNAIL'];
+    lOGISTICTYPE = json['LOGISTIC_TYPE'];
+    pRICE = json['PRICE'];
+    aVAILABLEQUANTITY = json['AVAILABLE_QUANTITY'];
+    mL = json['ML'];
+    aMZ = json['AMZ'];
+    sHEIN = json['SHEIN'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['CODIGO'] = this.cODIGO;
+    data['ID'] = this.iD;
+    data['TITLE'] = this.tITLE;
+    data['STATUS'] = this.sTATUS;
+    data['STOCK_CEDIS'] = this.sTOCKCEDIS;
+    data['THUMBNAIL'] = this.tHUMBNAIL;
+    data['LOGISTIC_TYPE'] = this.lOGISTICTYPE;
+    data['PRICE'] = this.pRICE;
+    data['AVAILABLE_QUANTITY'] = this.aVAILABLEQUANTITY;
+    data['ML'] = this.mL;
+    data['AMZ'] = this.aMZ;
+    data['SHEIN'] = this.sHEIN;
+    return data;
+  }
+}
+
+class Paused{
+  Future AMZ() async{
     var url = Uri.parse('http://45.56.74.34:6660/cross');
     var response = await http.get(url);
     List<cross_amazon> lista_amazon = <cross_amazon>[];
     if(response.statusCode ==200){
       String sJson =response.body.toString();
-      var Jsonv = json.decode(sJson);
-      //print(Jsonv);
+      var Json= json.decode(sJson);
+      var Jsonv = Json["data"] as List;
       for (var noteJson in Jsonv) {
-        lista_amazon.add(cross_amazon.from(noteJson));
+        lista_amazon.add(cross_amazon.fromJson(noteJson));
       }
       return lista_amazon;
+    }else
+      throw Exception('NO se pudo');
+  }
+  Future ML()async{
+    var url = Uri.parse('http://45.56.74.34:6660/ML_paused');
+    var response = await http.get(url);
+    List<ML_paused> lista = <ML_paused>[];
+    if(response.statusCode ==200){
+      String sJson =response.body.toString();
+      var Json= json.decode(sJson);
+      var Jsonv = Json["data"] as List;
+      for (var noteJson in Jsonv) {
+        lista.add(ML_paused.fromJson(noteJson));
+      }
+      return lista;
     }else
       throw Exception('NO se pudo');
   }

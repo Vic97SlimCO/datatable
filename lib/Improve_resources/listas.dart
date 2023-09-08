@@ -153,6 +153,9 @@ List<PlutoColumn> Petercolumn = <PlutoColumn>[
   },enableContextMenu: true,width: 95,hide: false),
   PlutoColumn(title: 'REVISADOPOR', field: 'A_CHECKEDBY', type:PlutoColumnType.text(),enableEditingMode: false),
   PlutoColumn(title: 'FECHAyHORA_C', field: 'DT', type: PlutoColumnType.text(),enableEditingMode: false,width: 150,),
+  PlutoColumn(title: 'V30AMZ', field: 'V30AMZ', type: PlutoColumnType.number(),enableEditingMode: false,width: 150,),
+  PlutoColumn(title: 'V30ML', field: 'V30ML', type: PlutoColumnType.number(),enableEditingMode: false,width: 150,),
+  PlutoColumn(title: 'V30SHEIN', field: 'V30SHEIN', type: PlutoColumnType.number(),enableEditingMode: false,width: 150,),
 ];
 //--------------------Ale
 List<PlutoColumn> Alecolumn = <PlutoColumn>[
@@ -305,6 +308,9 @@ List<PlutoColumn> Alecolumn = <PlutoColumn>[
   },enableContextMenu: true,width: 95,hide: false),
   PlutoColumn(title: 'REVISADOPOR', field: 'A_CHECKEDBY', type:PlutoColumnType.text(),enableEditingMode: false),
   PlutoColumn(title: 'DT', field: 'DT', type: PlutoColumnType.text(),enableEditingMode: false,width: 150,),
+  PlutoColumn(title: 'V30AMZ', field: 'V30AMZ', type: PlutoColumnType.number(),enableEditingMode: false,width: 150,),
+  PlutoColumn(title: 'V30ML', field: 'V30ML', type: PlutoColumnType.number(),enableEditingMode: false,width: 150,),
+  PlutoColumn(title: 'V30SHEIN', field: 'V30SHEIN', type: PlutoColumnType.number(),enableEditingMode: false,width: 150,),
 ];
 //-------YAZZ
 List<PlutoColumn> yazzcolumn = <PlutoColumn>[
@@ -360,7 +366,7 @@ List<PlutoColumn> yazzcolumn = <PlutoColumn>[
       <String>[
         'Viry',
         'Diana',
-        'MARKETING8',
+        'Angel',
         'Yitzil',
         'Gerardo',
         'Yazmin'
@@ -496,6 +502,9 @@ List<PlutoColumn> yazzcolumn = <PlutoColumn>[
   },width: 95,hide: false),
   PlutoColumn(title: 'USUARIO', field: 'A_CHECKEDBY', type:PlutoColumnType.text(),enableEditingMode: false),
   PlutoColumn(title: 'FECHAyHORA_C', field: 'DT', type: PlutoColumnType.text(),enableEditingMode: false,width: 150,),
+  PlutoColumn(title: 'V30AMZ', field: 'V30AMZ', type: PlutoColumnType.number(),enableEditingMode: false,width: 150,),
+  PlutoColumn(title: 'V30ML', field: 'V30ML', type: PlutoColumnType.number(),enableEditingMode: false,width: 150,),
+  PlutoColumn(title: 'V30SHEIN', field: 'V30SHEIN', type: PlutoColumnType.number(),enableEditingMode: false,width: 150,),
 ];
 
 List<PlutoColumn> colums = <PlutoColumn>[
@@ -550,7 +559,7 @@ List<PlutoColumn> colums = <PlutoColumn>[
       <String>[
         'Viry',
         'Diana',
-        'MARKETING8',
+        'Angel',
         'Yitzil',
         'Gerardo',
         'Yazmin'
@@ -686,7 +695,10 @@ List<PlutoColumn> colums = <PlutoColumn>[
     );
   },width: 95,hide: false),
   PlutoColumn(title: 'USUARIO', field: 'A_CHECKEDBY', type:PlutoColumnType.text(),enableEditingMode: false),
-  PlutoColumn(title: 'FECHAyHORA_C', field: 'DT', type: PlutoColumnType.text(),enableEditingMode: false,width: 150,)
+  PlutoColumn(title: 'FECHAyHORA_C', field: 'DT', type: PlutoColumnType.text(),enableEditingMode: false,width: 150,),
+  PlutoColumn(title: 'V30AMZ', field: 'V30AMZ', type: PlutoColumnType.number(),enableEditingMode: false,width: 150,),
+  PlutoColumn(title: 'V30ML', field: 'V30ML', type: PlutoColumnType.number(),enableEditingMode: false,width: 150,),
+  PlutoColumn(title: 'V30SHEIN', field: 'V30SHEIN', type: PlutoColumnType.number(),enableEditingMode: false,width: 150,),
 ];
 
 List<PlutoColumn> colums_DGN = <PlutoColumn>[

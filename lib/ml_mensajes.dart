@@ -19,8 +19,8 @@ class _ML_messagesState extends State<ML_messages> {
   List<ML_MSG> mensajes = <ML_MSG>[];
   List<PlutoRow> row_s = <PlutoRow>[];
   List<MLMvtasatrb> atrb = <MLMvtasatrb>[];
-  String initdt = DateTime.now().toString().substring(0,10);
-  String finaldt = DateTime.now().subtract(Duration(days: 30)).toString().substring(0,10);
+  String finaldt = DateTime.now().toString().substring(0,10);
+  String initdt = DateTime.now().subtract(Duration(days: 30)).toString().substring(0,10);
   late final PlutoGridStateManager stateManager;
   PlutoRow item_rows(ML_MSG msg){
     return PlutoRow(

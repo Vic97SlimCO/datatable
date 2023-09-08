@@ -221,6 +221,7 @@ class llegaran {
   String? dATEDREVISADO;
   String? eSTADO;
   String? fECHAENTRADACEDIS;
+  String? user;
 
   llegaran(
       {this.oRDERID,
@@ -232,7 +233,9 @@ class llegaran {
         this.rEVISADO,
         this.dATEDREVISADO,
         this.eSTADO,
-        this.fECHAENTRADACEDIS});
+        this.fECHAENTRADACEDIS,
+        this.user
+      });
 
   llegaran.fromJson(Map<String, dynamic> json) {
     oRDERID = json['ORDER_ID'];
@@ -245,6 +248,7 @@ class llegaran {
     dATEDREVISADO = json['DATED_REVISADO'];
     eSTADO = json['ESTADO'];
     fECHAENTRADACEDIS = json['FECHA_ENTRADA_CEDIS'];
+    user = json["nickname"];
   }
 
   Map<String, dynamic> toJson() {
@@ -259,6 +263,7 @@ class llegaran {
     data['DATED_REVISADO'] = this.dATEDREVISADO;
     data['ESTADO'] = this.eSTADO;
     data['FECHA_ENTRADA_CEDIS'] = this.fECHAENTRADACEDIS;
+    data['nickename']=this.user;
     return data;
   }
 }

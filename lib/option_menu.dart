@@ -210,7 +210,7 @@ class _Menu extends State<Menu>{
                      child: Image.network('https://cdn.redstagfulfillment.com/wp-content/uploads/RedStag_Dec18-110-1024x680.jpg'),),
                    Align(
                      alignment:Alignment.bottomCenter,
-                     child: NeumorphicText('AMAZON CROSS',
+                     child: NeumorphicText('PAUSADOS',
                        curve: Neumorphic.DEFAULT_CURVE,
                        style: NeumorphicStyle(
                          intensity: 16,
@@ -609,7 +609,7 @@ class _Menu extends State<Menu>{
        Visibility(child: _btn_cross,visible: allow_container(),),
        Visibility(child: _btn_cont,visible: allow_container(),),
        Visibility(child: _btn_promo,visible:promo_allow()),
-       Visibility(child: _btn_indice,visible: allow_indices(),),
+       //Visibility(child: _btn_indice,visible: allow_indices(),),
        Visibility(child: _btn_improve,visible: allow_improve(),),
        Visibility(child: _btn_design_tareas,visible: allow_d_task(),),
        Visibility(child: _btn_design_tareas_users,visible: allow_u_task(),),
@@ -642,11 +642,11 @@ class _Menu extends State<Menu>{
                visible:is_allowedTKN(),)
            ],
          ),
-         actions: <Widget>[
+         /*actions: <Widget>[
            IconButton(onPressed: () async {
              await openFile(is_allowedreturns()?'//192.168.10.110/Public/DEVOLUCIONES/SlimDataSetup.exe':'//192.168.10.109/Public/PROGRA/VICTOR/SlimData/SlimDataSetup.exe');
            }, icon: Icon(Icons.download))
-         ],
+         ],*/
        ),
        body: SingleChildScrollView(
         child: Center(
@@ -930,7 +930,6 @@ class _Menu extends State<Menu>{
     }
     return allow;
   }
-
   allow_d_task(){
     bool allow = false;
     switch(widget.user){
@@ -1084,6 +1083,8 @@ class _Menu extends State<Menu>{
     widget.user=='100'
     ||widget.user=='103'
     ||widget.user=='121'
+    ||widget.user=='101'
+    ||widget.user=='33'
     ){
       value = true;
     }
